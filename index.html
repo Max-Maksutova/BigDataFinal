@@ -147,7 +147,7 @@
 
 <script>
 const ALPHA_VANTAGE_KEY = '8I92ZI5AWDK202T1';
-const NEWS_API_KEY = '1db16276629349e88cedbe4ed4b29b79';
+const NEWS_API_KEY = 'pub_80750a544dd0488248d896356ab2d577db298';
 const stockList = ['AAPL', 'MSFT', 'TSLA', 'GOOGL', 'AMZN'];
 
 async function pullData() {
@@ -233,7 +233,6 @@ async function scrapeStockFromYahoo(symbol) {
 async function fetchTariffNews() {
   try {
     const keywords = encodeURIComponent("tariff OR tariffs OR trade war OR import tax");
-
     const today = new Date();
     const past = new Date(today);
     past.setDate(today.getDate() - 30);
@@ -241,20 +240,25 @@ async function fetchTariffNews() {
     const from = past.toISOString().split("T")[0];
     const to = today.toISOString().split("T")[0];
 
-    const url = `https://newsapi.org/v2/everything?q=${keywords}&from=${from}&to=${to}&language=en&sortBy=publishedAt&pageSize=10&apiKey=${NEWS_API_KEY}`;
-
-    console.log("NewsAPI URL:", url); // 💬 log the full URL
+    const url = `https://newsdata.io/api/1/archive?apikey=pub_80750a544dd0488248d896356ab2d577db298&q=${keywords}&language=en&from_date=${from}&to_date=${to}`;
 
     const res = await fetch(url);
     const data = await res.json();
 
-    console.log("NewsAPI response:", data); // 💬 log the full API response
+    if (data.status === "success" && data.results?.length > 0) {
+      return data.results.map(article => ({
+        title: article.title,
+        publishedAt: article.pubDate,
+        description: article.description,
+        source: { name: article.source_id || "NewsData" },
+        url: article.link
+      }));
+    }
 
-    if (data.articles?.length > 0) return data.articles;
-    throw new Error("No articles found in NewsAPI");
+    throw new Error("No articles found in NewsData.io");
   } catch (error) {
-    console.warn("NewsAPI failed, falling back to Yahoo...", error);
-    return scrapeYahooNews();
+    console.warn("NewsData.io failed, falling back to Yahoo...", error);
+    return scrapeYahooNews(); // keep your fallback if you want it
   }
 }
 
