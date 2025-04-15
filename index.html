@@ -237,6 +237,7 @@ async function fetchTariffNews() {
     const today = new Date();
     const past = new Date(today);
     past.setDate(today.getDate() - 30);
+
     const from = past.toISOString().split("T")[0];
     const to = today.toISOString().split("T")[0];
 
@@ -252,6 +253,7 @@ async function fetchTariffNews() {
     return scrapeYahooNews();
   }
 }
+
 
 async function scrapeYahooNews() {
   try {
@@ -333,13 +335,18 @@ function renderNews(news) {
   news.forEach(article => {
     const div = document.createElement("div");
     div.className = "news-item";
+    const date = new Date(article.publishedAt).toLocaleDateString();
+
     div.innerHTML = `
       <h3>${article.title}</h3>
-      <p><strong>${new Date(article.publishedAt).toLocaleDateString()}</strong> | ${article.source.name}</p>
-      <a href="${article.url}" target="_blank">Read more</a>`;
+      <p><strong>${date}</strong> | ${article.source?.name || "Unknown Source"}</p>
+      <p>${article.description || ""}</p>
+      <a href="${article.url}" target="_blank">Read full article</a>
+    `;
     newsContainer.appendChild(div);
   });
 }
+
 </script>
 </body>
 </html>
