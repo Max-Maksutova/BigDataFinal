@@ -243,8 +243,12 @@ async function fetchTariffNews() {
 
     const url = `https://newsapi.org/v2/everything?q=${keywords}&from=${from}&to=${to}&language=en&sortBy=publishedAt&pageSize=10&apiKey=${NEWS_API_KEY}`;
 
+    console.log("NewsAPI URL:", url); // 💬 log the full URL
+
     const res = await fetch(url);
     const data = await res.json();
+
+    console.log("NewsAPI response:", data); // 💬 log the full API response
 
     if (data.articles?.length > 0) return data.articles;
     throw new Error("No articles found in NewsAPI");
@@ -253,6 +257,7 @@ async function fetchTariffNews() {
     return scrapeYahooNews();
   }
 }
+
 
 
 async function scrapeYahooNews() {
