@@ -1,1 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tariff News Dashboard</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f3f4f6;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      padding: 8px;
+      margin: 5px;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #1e40af;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Tariff News Impact Dashboard</h2>
+    <input id="stockInput" placeholder="Enter stock symbol (e.g. AAPL)" />
+    <button onclick="loadData()">Pull Data</button>
+    <div id="chart" style="margin-top: 30px;"></div>
+  </div>
+
+  <script>
+    const alphaKey = "8I92ZI5AWDK202T1";
+    const newsKey = "8eb5058ccc8845ee8ee3e6fc45609e85";
+
+    async function loadData() {
+      const symbol = document.getElementById("stockInput").value || "AAPL";
+
+      // 1. Fetch stock data
+      const stockUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${symbol}&apikey=${alphaKey}`;
+      const stockRes = await fetch(stockUrl);
+      const stockJson = await stockRes.json();
+
+      const timeSeries = stockJson["Time Series (Daily)"];
+      if (!timeSeries) {
+        alert("Error: Could not load stock data");
+        return;
+      }
+
+      const dates = Object.keys(timeSeries).slice(0, 100).reverse();
+      const prices = dates.map(date => parseFloat(timeSeries[date]["4. close"]));
+
+      // 2. Fetch news data
+      const newsUrl = `https://newsapi.org/v2/everything?q=tariff OR trade war&language=en&pageSize=50&apiKey=${newsKey}`;
+      const newsRes = await fetch(newsUrl);
+      const newsJson = await newsRes.json();
+      const news = newsJson.articles || [];
+
+      // 3. Create plot
+      const trace = {
+        x: dates,
+        y: prices,
+        type: 'scatter',
+        mode: 'lines',
+        name: symbol,
+        line: { color: '#2563eb' }
+      };
+
+      const newsMarkers = news.map(article => {
+        const date = new Date(article.publishedAt).toISOString().split("T")[0];
+        if (!dates.includes(date)) return null;
+        return {
+          x: [date],
+          y: [prices[dates.indexOf(date)]],
+          mode: 'markers',
+          type: 'scatter',
+          name: 'Tariff News',
+          text: article.title + "<br><i>" + article.source.name + "</i>",
+          marker: { color: 'red', size: 10, symbol: "star" },
+          hoverinfo: 'text'
+        };
+      }).filter(Boolean);
+
+      const layout = {
+        title: `${symbol} Stock Price with Tariff News`,
+        xaxis: { title: "Date" },
+        yaxis: { title: "Price (USD)" }
+      };
+
+      Plotly.newPlot("chart", [trace, ...newsMarkers], layout);
+    }
+  </script>
+</body>
+</html>
 
