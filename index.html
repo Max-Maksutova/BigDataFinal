@@ -1,158 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Tariff News Dashboard</title>
+  <meta charset="UTF-8" />
+  <title>Tariff News Impact Dashboard</title>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f9fafb;
       margin: 0;
-      padding: 40px 20px;
+      padding: 20px;
       color: #1f2937;
     }
 
     .container {
       max-width: 1000px;
       margin: auto;
-      background: white;
+      background: #ffffff;
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
     }
 
     h1 {
-      text-align: center;
-      font-weight: 600;
-      font-size: 28px;
+      font-size: 2rem;
       margin-bottom: 10px;
     }
 
-    .description {
-      text-align: center;
+    p.description {
+      font-size: 1rem;
       color: #6b7280;
-      margin-bottom: 30px;
-      font-size: 15px;
-    }
-
-    .authors {
-      text-align: center;
-      font-size: 14px;
       margin-bottom: 20px;
-      color: #9ca3af;
     }
 
-    .controls {
+    .form-group {
       display: flex;
       gap: 10px;
       margin-bottom: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
     }
 
-    input, select, button {
+    select, button {
       padding: 10px;
+      font-size: 1rem;
       border-radius: 6px;
       border: 1px solid #d1d5db;
-      font-size: 14px;
     }
 
     button {
       background-color: #2563eb;
       color: white;
       cursor: pointer;
-      border: none;
+      transition: background-color 0.2s;
     }
 
     button:hover {
-      background-color: #1e40af;
-    }
-
-    #chart {
-      width: 100%;
-      height: 500px;
-    }
-
-    .news-section {
-      margin-top: 30px;
+      background-color: #1d4ed8;
     }
 
     .news-item {
-      border: 1px solid #e5e7eb;
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      background-color: #f9fafb;
+      margin-bottom: 15px;
+      padding: 15px;
+      border-left: 4px solid #2563eb;
+      background-color: #f1f5f9;
+      border-radius: 6px;
     }
 
     .news-item h3 {
       margin: 0;
-      font-size: 16px;
+      font-size: 1rem;
     }
 
     .news-item p {
       margin: 5px 0;
-      font-size: 14px;
-      color: #374151;
+      font-size: 0.9rem;
     }
 
-    .news-item a {
-      font-size: 13px;
-      color: #3b82f6;
+    .footer {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #6b7280;
+      text-align: center;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Tariff News Impact Dashboard</h1>
-    <div class="authors">Max Maksutova, Spring 2025 Big Data Project</div>
-    <div class="description">
-      Explore the relationship between U.S. tariff-related news and stock performance. Select a company and view its stock movement alongside the latest trade-related news headlines.
+    <p class="description">
+      Visualize how stock prices respond to major tariff and trade-related news events. Select a stock to analyze or compare them all. Built by Team 8.
+    </p>
+
+    <div class="form-group">
+      <select id="stockSelect">
+        <option value="AAPL">Apple (AAPL)</option>
+        <option value="MSFT">Microsoft (MSFT)</option>
+        <option value="TSLA">Tesla (TSLA)</option>
+        <option value="GOOGL">Google (GOOGL)</option>
+        <option value="AMZN">Amazon (AMZN)</option>
+        <option value="ALL">All Stocks Combined</option>
+      </select>
+      <button onclick="pullData()">Pull Data</button>
     </div>
 
-    <div class="controls">
-      <input id="stockInput" placeholder="Enter stock symbol (e.g. AAPL)" />
-      <button onclick="loadData()">Pull Data</button>
-    </div>
+    <div id="chart" style="height: 500px;"></div>
 
-    <div id="chart"></div>
+    <h2 style="margin-top: 40px;">Recent Tariff News</h2>
+    <div id="newsList"></div>
 
-    <div class="news-section">
-      <h2>Related News</h2>
-      <div id="newsList"></div>
+    <div class="footer">
+      Dashboard powered by Alpha Vantage and NewsAPI | Designed by Max & Team
     </div>
   </div>
+
   <script>
     const ALPHA_VANTAGE_KEY = '8I92ZI5AWDK202T1';
     const NEWS_API_KEY = '8eb5058ccc8845ee8ee3e6fc45609e85';
-
-    const stockSelect = document.getElementById("stockSelect");
-    const pullBtn = document.getElementById("pullBtn");
-    const chartContainer = document.getElementById("chart");
-    const newsList = document.getElementById("newsList");
-
-    const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in ms
-
-    function setChart(dates, prices, symbol) {
-      const trace = {
-        x: dates,
-        y: prices,
-        type: "scatter",
-        mode: "lines+markers",
-        line: { color: "#3182ce" },
-        name: symbol
-      };
-
-      const layout = {
-        title: "Stock Price Over Time",
-        xaxis: { title: "Date" },
-        yaxis: { title: "Price (USD)" },
-      };
-
-      Plotly.newPlot(chartContainer, [trace], layout);
-    }
+    const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+    const stockList = ['AAPL', 'MSFT', 'TSLA', 'GOOGL', 'AMZN'];
 
     async function getCachedData(symbol) {
       const cached = localStorage.getItem(`stock-${symbol}`);
@@ -170,12 +134,13 @@
       if (cached) return cached;
 
       const url = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${ALPHA_VANTAGE_KEY}`;
-      const response = await fetch(url);
-      const data = await response.json();
-
+      const res = await fetch(url);
+      const data = await res.json();
       const timeSeries = data["Time Series (Daily)"];
+      if (!timeSeries) return { dates: [], prices: [] };
+
       const dates = Object.keys(timeSeries).slice(0, 30).reverse();
-      const prices = dates.map((date) => parseFloat(timeSeries[date]["4. close"]));
+      const prices = dates.map(date => parseFloat(timeSeries[date]["4. close"]));
 
       localStorage.setItem(`stock-${symbol}`, JSON.stringify({
         timestamp: Date.now(),
@@ -186,50 +151,66 @@
       return { dates, prices };
     }
 
-    async function fetchNewsData(symbol) {
-      const url = `https://newsapi.org/v2/everything?q=${symbol}+tariff&apiKey=${NEWS_API_KEY}`;
-      const response = await fetch(url);
-      const data = await response.json();
+    function setChart(dataArray) {
+      const traces = dataArray.map(({ symbol, dates, prices }, index) => ({
+        x: dates,
+        y: prices,
+        mode: 'lines+markers',
+        name: symbol,
+        type: 'scatter'
+      }));
+
+      Plotly.newPlot("chart", traces, {
+        title: "Stock Price Over Time",
+        xaxis: { title: "Date" },
+        yaxis: { title: "Price (USD)" },
+        legend: { orientation: "h", y: -0.2 }
+      });
+    }
+
+    async function fetchTariffNews() {
+      const keywords = encodeURIComponent("tariff OR tariffs OR taxes OR China OR trade war");
+      const url = `https://newsapi.org/v2/top-headlines?q=${keywords}&apiKey=${NEWS_API_KEY}`;
+      const res = await fetch(url);
+      const data = await res.json();
       return data.articles.slice(0, 5);
     }
 
     async function pullData() {
-      const symbol = stockSelect.value;
-      chartContainer.innerHTML = "Loading chart...";
-      newsList.innerHTML = "Loading news...";
+      const symbol = document.getElementById("stockSelect").value;
+      document.getElementById("chart").innerHTML = "Loading chart...";
+      document.getElementById("newsList").innerHTML = "Loading news...";
+
+      let chartData = [];
 
       if (symbol === "ALL") {
-        const stocks = ["AAPL", "MSFT", "TSLA", "NVDA", "AMZN"];
-        let allDates = [];
-        let allPrices = [];
-        for (let stock of stocks) {
-          const { dates, prices } = await fetchStockData(stock);
-          setChart(dates, prices, stock);
+        for (const sym of stockList) {
+          const data = await fetchStockData(sym);
+          chartData.push({ symbol: sym, ...data });
         }
       } else {
-        const { dates, prices } = await fetchStockData(symbol);
-        setChart(dates, prices, symbol);
+        const data = await fetchStockData(symbol);
+        chartData.push({ symbol, ...data });
       }
 
-      const news = await fetchNewsData(symbol);
-      newsList.innerHTML = "";
-      news.forEach((article) => {
-        const item = document.createElement("div");
-        item.innerHTML = `
-          <div class="border p-3 rounded shadow-sm mb-2 bg-white">
-            <p class="font-semibold">${article.title}</p>
-            <p class="text-sm text-gray-600">${new Date(article.publishedAt).toLocaleString()}</p>
-            <p class="text-sm mt-1">${article.description}</p>
-            <a href="${article.url}" target="_blank" class="text-blue-500 text-sm">Read more</a>
-          </div>
+      setChart(chartData);
+
+      const news = await fetchTariffNews();
+      const newsContainer = document.getElementById("newsList");
+      newsContainer.innerHTML = "";
+
+      news.forEach(article => {
+        const div = document.createElement("div");
+        div.className = "news-item";
+        div.innerHTML = `
+          <h3>${article.title}</h3>
+          <p><strong>${new Date(article.publishedAt).toLocaleDateString()}</strong> | ${article.source.name}</p>
+          <p>${article.description || ""}</p>
+          <a href="${article.url}" target="_blank">Read more</a>
         `;
-        newsList.appendChild(item);
+        newsContainer.appendChild(div);
       });
     }
-
-    pullBtn.addEventListener("click", pullData);
   </script>
-
 </body>
 </html>
-
