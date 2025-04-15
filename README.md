@@ -1,2 +1,2 @@
 # BigDataFinal
-final project for big data website build
+By: Max Maksutova, Mollie Schuma, Nicole Sellers, Sarah Wozniak
