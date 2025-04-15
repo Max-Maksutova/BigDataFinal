@@ -115,7 +115,7 @@
   <script>
     const ALPHA_VANTAGE_KEY = '8I92ZI5AWDK202T1';
     const NEWS_API_KEY = '8eb5058ccc8845ee8ee3e6fc45609e85';
-    const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+    const CACHE_DURATION = 24 * 60 * 60 * 1000;
     const stockList = ['AAPL', 'MSFT', 'TSLA', 'GOOGL', 'AMZN'];
 
     async function getCachedData(symbol) {
@@ -151,23 +151,6 @@
       return { dates, prices };
     }
 
-    function setChart(dataArray) {
-      const traces = dataArray.map(({ symbol, dates, prices }, index) => ({
-        x: dates,
-        y: prices,
-        mode: 'lines+markers',
-        name: symbol,
-        type: 'scatter'
-      }));
-
-      Plotly.newPlot("chart", traces, {
-        title: "Stock Price Over Time",
-        xaxis: { title: "Date" },
-        yaxis: { title: "Price (USD)" },
-        legend: { orientation: "h", y: -0.2 }
-      });
-    }
-
     async function fetchTariffNews() {
       const keywords = encodeURIComponent("tariff OR tariffs OR taxes OR China OR trade war");
       const url = `https://newsapi.org/v2/top-headlines?q=${keywords}&apiKey=${NEWS_API_KEY}`;
@@ -176,12 +159,69 @@
       return data.articles.slice(0, 5);
     }
 
+    function setChart(dataArray, news) {
+      const traces = dataArray.map(({ symbol, dates, prices }) => ({
+        x: dates,
+        y: prices,
+        mode: 'lines+markers',
+        name: symbol,
+        type: 'scatter'
+      }));
+
+      if (news && news.length > 0) {
+        const newsMarkers = news
+          .filter(n => !!n.publishedAt)
+          .map(article => {
+            const date = new Date(article.publishedAt).toISOString().split("T")[0];
+            return {
+              x: [date],
+              y: [null],
+              mode: 'markers',
+              name: 'News',
+              text: [`${article.title}<br>${new Date(article.publishedAt).toLocaleDateString()}`],
+              marker: { size: 10, color: 'red', symbol: 'diamond' },
+              type: 'scatter'
+            };
+          });
+
+        traces.push(...newsMarkers);
+      }
+
+      const shapes = news
+        .filter(n => !!n.publishedAt)
+        .map(article => {
+          const date = new Date(article.publishedAt).toISOString().split("T")[0];
+          return {
+            type: 'line',
+            x0: date,
+            x1: date,
+            y0: 0,
+            y1: 1,
+            yref: 'paper',
+            line: {
+              color: 'red',
+              width: 1,
+              dash: 'dot'
+            }
+          };
+        });
+
+      Plotly.newPlot("chart", traces, {
+        title: "Stock Price Over Time",
+        xaxis: { title: "Date" },
+        yaxis: { title: "Price (USD)" },
+        legend: { orientation: "h", y: -0.2 },
+        shapes: shapes
+      });
+    }
+
     async function pullData() {
       const symbol = document.getElementById("stockSelect").value;
       document.getElementById("chart").innerHTML = "Loading chart...";
       document.getElementById("newsList").innerHTML = "Loading news...";
 
       let chartData = [];
+      let news = [];
 
       if (symbol === "ALL") {
         for (const sym of stockList) {
@@ -193,11 +233,16 @@
         chartData.push({ symbol, ...data });
       }
 
-      setChart(chartData);
+      news = await fetchTariffNews();
+      setChart(chartData, news);
 
-      const news = await fetchTariffNews();
       const newsContainer = document.getElementById("newsList");
       newsContainer.innerHTML = "";
+
+      if (news.length === 0) {
+        newsContainer.innerHTML = "<p>No relevant news found at this time.</p>";
+        return;
+      }
 
       news.forEach(article => {
         const div = document.createElement("div");
