@@ -233,7 +233,7 @@
 
       Plotly.newPlot("chart", [...traces, ...newsMarkers], {
         title: "Stock Price Over Time",
-        xaxis: { title: "Date" },
+        xaxis: { title: "Date", type: "date" },
         yaxis: { title: "Price (USD)" },
         legend: { orientation: "h", y: -0.2 }
       });
