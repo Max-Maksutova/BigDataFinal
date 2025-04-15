@@ -232,25 +232,23 @@ async function scrapeStockFromYahoo(symbol) {
 
 async function fetchTariffNews() {
   try {
-    const keywords = encodeURIComponent("tariff OR tariffs OR trade war OR China OR import taxes");
+    const keywords = encodeURIComponent("tariff OR tariffs OR trade war OR import tax");
 
-    // Get date 30 days ago
     const today = new Date();
     const past = new Date(today);
     past.setDate(today.getDate() - 30);
-
     const from = past.toISOString().split("T")[0];
     const to = today.toISOString().split("T")[0];
 
-    const url = `https://newsapi.org/v2/everything?q=${keywords}&from=${from}&to=${to}&language=en&sortBy=publishedAt&pageSize=10&domains=wsj.com,nytimes.com,reuters.com,bloomberg.com,cnbc.com,cnn.com,forbes.com,apnews.com&apiKey=${NEWS_API_KEY}`;
-    
+    const url = `https://newsapi.org/v2/everything?q=${keywords}&from=${from}&to=${to}&language=en&sortBy=publishedAt&pageSize=10&apiKey=${NEWS_API_KEY}`;
+
     const res = await fetch(url);
     const data = await res.json();
 
     if (data.articles?.length > 0) return data.articles;
     throw new Error("No articles found in NewsAPI");
   } catch (error) {
-    console.warn("NewsAPI everything failed, falling back to Yahoo scraping...", error);
+    console.warn("NewsAPI failed, falling back to Yahoo...", error);
     return scrapeYahooNews();
   }
 }
