@@ -161,7 +161,7 @@
       "#FFB6C1",  // LightPink
       "#ADD8E6",  // LightBlue
       "#D8BFD8",  // Thistle
-      "#E0BBE4",  // Pastel Violet (replacing green)
+      "#C1E1C1",  // LightGreen (replaces violet)
       "#FFFFE0",  // LightYellow
       "#F08080",  // LightCoral
       "#E6E6FA"   // Lavender
@@ -320,16 +320,30 @@
       name: 'News'
     };
 
-    Plotly.newPlot("chart", [...stockTraces, newsHoverTrace], {
-      title: "Stock Price Over Time (Last 30 Days)",
-      xaxis: { title: "Date", type: "date", range: [minDateStr, maxDateStr] },
-      yaxis: { title: "Price (USD)" },
-      height: chartHeight,
-      shapes: newsShapes,
-      legend: { orientation: "h", y: -0.2 },
-      paper_bgcolor: "#e5e7eb",
-      plot_bgcolor: "#e5e7eb"
-    });
+      Plotly.newPlot("chart", [...stockTraces, newsHoverTrace], {
+        title: {
+          text: "Stock Price Over Time (Last 30 Days)",
+          font: { family: "Segoe UI, sans-serif", size: 20, color: "#1f2937", weight: "bold" }
+        },
+        xaxis: {
+          title: { text: "Date", font: { family: "Segoe UI", size: 14, color: "#1f2937", weight: "bold" } },
+          tickfont: { family: "Segoe UI", size: 12, color: "#1f2937", weight: "bold" }
+        },
+        yaxis: {
+          title: { text: "Price (USD)", font: { family: "Segoe UI", size: 14, color: "#1f2937", weight: "bold" } },
+          tickfont: { family: "Segoe UI", size: 12, color: "#1f2937", weight: "bold" }
+        },
+        legend: {
+          orientation: "h",
+          y: -0.2,
+          font: { family: "Segoe UI", size: 12, color: "#1f2937", weight: "bold" }
+        },
+        paper_bgcolor: "#e5e7eb",
+        plot_bgcolor: "#e5e7eb",
+        height: chartHeight,
+        shapes: newsShapes
+      });
+
 
     const percentChangeTraces = dataArray.map(({ symbol, dates, prices }, i) => {
       const percentChanges = prices.map((price, idx) => {
@@ -381,15 +395,58 @@
     };
 
     Plotly.newPlot("percentChart", [...percentChangeTraces, percentNewsHoverTrace], {
-      title: "Daily Percent Change (Last 30 Days)",
-      xaxis: { title: "Date", type: "date", range: [minDateStr, maxDateStr] },
-      yaxis: { title: "Percent Change (%)" },
+      title: {
+        text: "Daily Percent Change (Last 30 Days)",
+        font: {
+          family: "Segoe UI, sans-serif",
+          size: 20,
+          color: "#1f2937"
+        }
+      },
+      xaxis: {
+        title: {
+          text: "Date",
+          font: {
+            family: "Segoe UI",
+            size: 14,
+            color: "#1f2937"
+          }
+        },
+        tickfont: {
+          family: "Segoe UI",
+          size: 12,
+          color: "#1f2937"
+        }
+      },
+      yaxis: {
+        title: {
+          text: "Percent Change (%)",
+          font: {
+            family: "Segoe UI",
+            size: 14,
+            color: "#1f2937"
+          }
+        },
+        tickfont: {
+          family: "Segoe UI",
+          size: 12,
+          color: "#1f2937"
+        }
+      },
+      legend: {
+        orientation: "h",
+        y: -0.2,
+        font: {
+          family: "Segoe UI",
+          size: 12,
+          color: "#1f2937"
+        }
+      },
+      paper_bgcolor: "#e5e7eb",
+      plot_bgcolor: "#e5e7eb",
       height: percentChartHeight,
       margin: { t: 60, b: 60, l: 60, r: 30 },
-      shapes: newsShapes,
-      legend: { orientation: "h", y: -0.2 },
-      paper_bgcolor: "#e5e7eb",
-      plot_bgcolor: "#e5e7eb"
+      shapes: newsShapes
     });
   }
 
