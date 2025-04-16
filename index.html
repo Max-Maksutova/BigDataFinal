@@ -7,23 +7,23 @@
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f0f2f5;
+      background-color: #f1f5f9;
       margin: 0;
       padding: 30px;
-      color: #2e2e2e;
+      color: #1f2937;
     }
     .container {
       max-width: 1000px;
       margin: auto;
-      background: #ffffff;
+      background: #f3f4f6;
       padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
     }
     h1 {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       margin-bottom: 0.5rem;
-      color: #1f2937;
+      color: #111827;
     }
     p.description {
       font-size: 1.1rem;
@@ -43,24 +43,23 @@
       border: 1px solid #d1d5db;
     }
     button {
-      background-color: #1d4ed8;
+      background-color: #2563eb;
       color: white;
       font-weight: 600;
       cursor: pointer;
       transition: background-color 0.2s, transform 0.1s;
     }
     button:hover {
-      background-color: #1e3a8a;
+      background-color: #1d4ed8;
       transform: translateY(-1px);
     }
     #chart, #percentChart {
-      background-color: #ffffff;
+      background-color: #fff;
       padding: 10px;
       border-radius: 12px;
-      box-shadow: 0 0 0 1px #e5e7eb inset;
+      box-shadow: inset 0 0 0 1px #e5e7eb;
       text-align: center;
       margin-top: 30px;
-      min-height: 500px;
     }
     h2 {
       font-size: 1.5rem;
@@ -71,7 +70,7 @@
     .news-item {
       margin-bottom: 20px;
       padding: 18px 20px;
-      border-left: 4px solid #1d4ed8;
+      border-left: 4px solid #2563eb;
       background-color: #f9fafb;
       border-radius: 10px;
       transition: background-color 0.2s;
@@ -80,12 +79,12 @@
       background-color: #f3f4f6;
     }
     .news-item.new {
-      background-color: #dbeafe;
+      background-color: #e0f2fe;
     }
     .news-item h3 {
       margin: 0;
       font-size: 1.1rem;
-      color: #1e3a8a;
+      color: #1e40af;
     }
     .news-item p {
       margin: 6px 0;
@@ -93,7 +92,7 @@
       color: #374151;
     }
     .news-item a {
-      color: #1d4ed8;
+      color: #2563eb;
       font-weight: 500;
       text-decoration: none;
     }
@@ -102,7 +101,7 @@
     }
     .badge-new {
       display: inline-block;
-      background-color: #1d4ed8;
+      background-color: #2563eb;
       color: white;
       font-size: 0.75rem;
       font-weight: bold;
@@ -122,13 +121,6 @@
       }
     }
   </style>
-  <script>
-    const colorPalette = [
-      "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728",
-      "#9467bd", "#8c564b", "#e377c2", "#7f7f7f",
-      "#bcbd22", "#17becf"
-    ];
-  </script>
 </head>
 <body>
   <div class="container">
@@ -259,9 +251,9 @@
 
     const stockTraces = dataArray.map(({ symbol, dates, prices }, i) => {
       let hoverText = prices.map((price, idx) => {
-        if (idx === 0) return `${symbol}: ${price.toFixed(2)} (—%)`;
+        if (idx === 0) return ${symbol}: ${price.toFixed(2)} (—%);
         const pctChange = ((price - prices[idx - 1]) / prices[idx - 1]) * 100;
-        return `${symbol}: ${price.toFixed(2)} (${pctChange.toFixed(2)}%)`;
+        return ${symbol}: ${price.toFixed(2)} (${pctChange.toFixed(2)}%);
       });
     
       return {
@@ -300,14 +292,14 @@
           if (idx > 0) {
             const prev = stockData.prices[idx - 1];
             const impact = ((yVal - prev) / prev) * 100;
-            impactText = `Impact: ${impact.toFixed(2)}%`;
+            impactText = Impact: ${impact.toFixed(2)}%;
           }
         }
       }
       return {
         x: dateStr,
         y: yVal,
-        hoverText: `<b>${article.title}</b><br>${article.description}<br>${impactText}`
+        hoverText: <b>${article.title}</b><br>${article.description}<br>${impactText}
       };
     });
 
@@ -359,13 +351,13 @@ document.getElementById("percentChart").innerHTML = "";
           const curr = stockData.prices[idx];
           const pctChange = ((curr - prev) / prev) * 100;
           yVal = ((curr - prev) / prev) * 100;
-          percentText = `${pctChange.toFixed(2)}%`;
+          percentText = ${pctChange.toFixed(2)}%;
         }
       }
       return {
         x: dateStr,
         y: yVal,
-        hoverText: `<b>${article.title}</b><br>Date: ${dateStr}<br>Change: ${percentText}`
+        hoverText: <b>${article.title}</b><br>Date: ${dateStr}<br>Change: ${percentText}
       };
     });
 
@@ -427,11 +419,11 @@ document.getElementById("percentChart").innerHTML = "";
       const isNew = newsDate >= threeDaysAgo;
       div.className = "news-item" + (isNew ? " new" : "");
       const dateStr = newsDate.toLocaleDateString();
-      div.innerHTML = `
+      div.innerHTML = 
         <h3>${article.title}${isNew ? '<span class="badge-new">NEW</span>' : ''}</h3>
         <p><strong>${dateStr}</strong></p>
         <p>${article.description}</p>
-      `;
+      ;
       newsContainer.appendChild(div);
     });
   }
