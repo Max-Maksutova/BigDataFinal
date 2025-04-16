@@ -135,6 +135,8 @@
       <button onclick="pullData()">Pull Data</button>
     </div>
     <div id="chart">Loading chart...</div>
+    <div id="percentChart" style="margin-top: 50px;">Loading percent change chart...</div>
+
     <h2>Recent Tariff News (Last 30 Days)</h2>
     <div id="newsList">Loading news...</div>
     <div class="footer">
@@ -145,14 +147,20 @@
 <script>
   // Define a cute pastel color palette with no greens.
   const colorPalette = [
-    "#FFB6C1",  // LightPink
-    "#ADD8E6",  // LightBlue
-    "#D8BFD8",  // Thistle
-    "#E0BBE4",  // Pastel Violet (replacing green)
-    "#FFFFE0",  // LightYellow
-    "#F08080",  // LightCoral
-    "#E6E6FA"   // Lavender
-  ];
+  "#e6194b",  // strong red
+  "#3cb44b",  // green
+  "#0082c8",  // blue
+  "#f58231",  // orange
+  "#911eb4",  // purple
+  "#46f0f0",  // cyan
+  "#f032e6",  // magenta
+  "#000000",  // black
+  "#a9a9a9",  // dark gray
+  "#ff1493",  // deep pink
+  "#00ced1",  // dark turquoise
+  "#ff4500"   // orange-red
+];
+
 
   const validStockSymbols = ['AAPL', 'AMZN', 'GOOGL', 'META', 'MSFT', 'NVDA', 'TSLA'];
 
@@ -314,6 +322,29 @@
       xaxis: { title: "Date", type: "date", range: [minDateStr, maxDateStr] },
       yaxis: { title: "Price (USD)" },
       shapes: newsShapes,
+      legend: { orientation: "h", y: -0.2 }
+    });
+    
+    const percentChangeTraces = dataArray.map(({ symbol, dates, prices }, i) => {
+      const percentChanges = prices.map((price, idx) => {
+        if (idx === 0) return 0;
+        return ((price - prices[idx - 1]) / prices[idx - 1]) * 100;
+      });
+      return {
+        x: dates,
+        y: percentChanges,
+        mode: 'lines+markers',
+        name: symbol,
+        type: 'scatter',
+        line: { color: colorPalette[i % colorPalette.length], width: 2 },
+        marker: { size: 6 }
+      };
+    });
+    
+    Plotly.newPlot("percentChart", percentChangeTraces, {
+      title: "Daily Percent Change (Last 30 Days)",
+      xaxis: { title: "Date", type: "date", range: [minDateStr, maxDateStr] },
+      yaxis: { title: "Percent Change (%)" },
       legend: { orientation: "h", y: -0.2 }
     });
   }
