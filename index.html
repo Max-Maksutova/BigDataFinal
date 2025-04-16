@@ -328,10 +328,12 @@
     });
 
     Plotly.newPlot("percentChart", percentChangeTraces, {
-      title: "Daily Percent Change (Last 30 Days)",
-      xaxis: { title: "Date", type: "date", range: [minDateStr, maxDateStr] },
-      yaxis: { title: "Percent Change (%)" },
-      legend: { orientation: "h", y: -0.2 }
+        title: "Daily Percent Change (Last 30 Days)",
+        xaxis: { title: "Date", type: "date", range: [minDateStr, maxDateStr] },
+        yaxis: { title: "Percent Change (%)" },
+        height: 450,  // Add height manually
+        margin: { t: 60, b: 60, l: 60, r: 30 },
+        legend: { orientation: "h", y: -0.2 }
     });
   }
 
