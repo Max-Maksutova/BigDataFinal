@@ -53,12 +53,13 @@
       background-color: #1d4ed8;
       transform: translateY(-1px);
     }
-    #chart {
+    #chart, #percentChart {
       background-color: #fff;
       padding: 10px;
       border-radius: 12px;
       box-shadow: inset 0 0 0 1px #e5e7eb;
       text-align: center;
+      margin-top: 30px;
     }
     h2 {
       font-size: 1.5rem;
@@ -77,6 +78,9 @@
     .news-item:hover {
       background-color: #f3f4f6;
     }
+    .news-item.new {
+      background-color: #e0f2fe;
+    }
     .news-item h3 {
       margin: 0;
       font-size: 1.1rem;
@@ -94,6 +98,16 @@
     }
     .news-item a:hover {
       text-decoration: underline;
+    }
+    .badge-new {
+      display: inline-block;
+      background-color: #2563eb;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 6px;
+      margin-left: 8px;
     }
     .footer {
       margin-top: 60px;
@@ -135,8 +149,7 @@
       <button onclick="pullData()">Pull Data</button>
     </div>
     <div id="chart">Loading chart...</div>
-    <div id="percentChart" style="margin-top: 50px;">Loading percent change chart...</div>
-
+    <div id="percentChart">Loading percent change chart...</div>
     <h2>Recent Tariff News (Last 30 Days)</h2>
     <div id="newsList">Loading news...</div>
     <div class="footer">
@@ -145,31 +158,20 @@
   </div>
   
 <script>
-  // Define a cute pastel color palette with no greens.
   const colorPalette = [
-  "#e6194b",  // strong red
-  "#3cb44b",  // green
-  "#0082c8",  // blue
-  "#f58231",  // orange
-  "#911eb4",  // purple
-  "#46f0f0",  // cyan
-  "#f032e6",  // magenta
-  "#000000",  // black
-  "#a9a9a9",  // dark gray
-  "#ff1493",  // deep pink
-  "#00ced1",  // dark turquoise
-  "#ff4500"   // orange-red
-];
-
+    "#e6194b", "#3cb44b", "#0082c8", "#f58231",
+    "#911eb4", "#46f0f0", "#f032e6", "#000000",
+    "#a9a9a9", "#ff1493", "#00ced1", "#ff4500"
+  ];
 
   const validStockSymbols = ['AAPL', 'AMZN', 'GOOGL', 'META', 'MSFT', 'NVDA', 'TSLA'];
 
   async function pullData() {
     const symbol = document.getElementById("stockSelect").value;
-    console.log("Selected symbol:", symbol);
     document.getElementById("chart").innerHTML = "Loading chart...";
+    document.getElementById("percentChart").innerHTML = "Loading percent change chart...";
     document.getElementById("newsList").innerHTML = "Loading news...";
-    
+
     let chartData = [];
     if (symbol === "ALL") {
       for (const sym of validStockSymbols) {
@@ -182,14 +184,14 @@
       const data = await fetchStockData(symbol);
       chartData.push({ symbol, ...data });
     }
-    
+
     const allNews = await fetchTariffNews();
-    
+
     if (!chartData || chartData.length === 0 || chartData.every(item => item.dates.length === 0)) {
       document.getElementById("chart").innerHTML = "No stock data available for the selected symbol.";
       return;
     }
-    
+
     setChart(chartData, allNews);
     renderNews(allNews, chartData);
   }
@@ -200,8 +202,8 @@
       const res = await fetch(jsonFileName);
       const data = await res.json();
       const timeSeries = data["Time Series (Daily)"];
-      const sortedDates = Object.keys(timeSeries).sort();  // oldest → newest
-      const dates = sortedDates.slice(-30);                // last 30 days only
+      const sortedDates = Object.keys(timeSeries).sort();
+      const dates = sortedDates.slice(-30);
       const prices = dates.map(date => parseFloat(timeSeries[date]["4. close"]));
       return { dates, prices };
     } catch (error) {
@@ -227,7 +229,7 @@
 
   function setChart(dataArray, allNews) {
     const chartEl = document.getElementById("chart");
-    chartEl.innerHTML = "";  // Clear the "Loading chart..." text
+    chartEl.innerHTML = "";
 
     let minDate = null, maxDate = null;
     dataArray.forEach(({ dates }) => {
@@ -238,12 +240,7 @@
         if (!maxDate || dMax > maxDate) maxDate = dMax;
       }
     });
-    
-    if (!minDate || !maxDate) {
-      chartEl.innerHTML = "Invalid stock data.";
-      return;
-    }
-    
+
     const minDateStr = minDate.toISOString().split("T")[0];
     const maxDateStr = maxDate.toISOString().split("T")[0];
 
@@ -259,19 +256,9 @@
       name: symbol,
       type: 'scatter',
       line: { color: colorPalette[i % colorPalette.length], width: 2 },
-      marker: { color: colorPalette[i % colorPalette.length], size: 6 }
+      marker: { size: 8 }
     }));
 
-    const stockData = (dataArray.length === 1) ? dataArray[0] : null;
-    let midY = null;
-    if (!stockData) {
-      let allPrices = [];
-      dataArray.forEach(item => { allPrices = allPrices.concat(item.prices); });
-      const yMin = Math.min(...allPrices);
-      const yMax = Math.max(...allPrices);
-      midY = (yMin + yMax) / 2;
-    }
-    
     const newsShapes = filteredNews.map(article => ({
       type: 'line',
       x0: article.date,
@@ -283,12 +270,13 @@
       line: { color: "#DDA0DD", width: 1, dash: 'dot' }
     }));
 
+    const stockData = dataArray.length === 1 ? dataArray[0] : null;
     const newsHoverData = filteredNews.map(article => {
-      const articleDateStr = article.date;
-      let yVal = stockData ? null : midY;
+      const dateStr = article.date;
+      let yVal = stockData ? null : 0;
       let impactText = "";
       if (stockData) {
-        const idx = stockData.dates.indexOf(articleDateStr);
+        const idx = stockData.dates.indexOf(dateStr);
         if (idx !== -1) {
           yVal = stockData.prices[idx];
           if (idx > 0) {
@@ -296,12 +284,10 @@
             const impact = ((yVal - prev) / prev) * 100;
             impactText = `Impact: ${impact.toFixed(2)}%`;
           }
-        } else {
-          yVal = midY;
         }
       }
       return {
-        x: articleDateStr,
+        x: dateStr,
         y: yVal,
         hoverText: `<b>${article.title}</b><br>${article.description}<br>${impactText}`
       };
@@ -324,7 +310,7 @@
       shapes: newsShapes,
       legend: { orientation: "h", y: -0.2 }
     });
-    
+
     const percentChangeTraces = dataArray.map(({ symbol, dates, prices }, i) => {
       const percentChanges = prices.map((price, idx) => {
         if (idx === 0) return 0;
@@ -337,10 +323,10 @@
         name: symbol,
         type: 'scatter',
         line: { color: colorPalette[i % colorPalette.length], width: 2 },
-        marker: { size: 6 }
+        marker: { size: 10 }
       };
     });
-    
+
     Plotly.newPlot("percentChart", percentChangeTraces, {
       title: "Daily Percent Change (Last 30 Days)",
       xaxis: { title: "Date", type: "date", range: [minDateStr, maxDateStr] },
@@ -350,6 +336,10 @@
   }
 
   function renderNews(allNews, dataArray) {
+    const today = new Date();
+    const threeDaysAgo = new Date(today);
+    threeDaysAgo.setDate(today.getDate() - 3);
+
     let minDate = null, maxDate = null;
     dataArray.forEach(({ dates }) => {
       if (dates.length) {
@@ -359,15 +349,17 @@
         if (!maxDate || dMax > maxDate) maxDate = dMax;
       }
     });
-    
-    const filteredNews = allNews.filter(article => {
-      const newsDate = new Date(article.date);
-      return newsDate >= minDate && newsDate <= maxDate;
-    });
+
+    const filteredNews = allNews
+      .filter(article => {
+        const newsDate = new Date(article.date);
+        return newsDate >= minDate && newsDate <= maxDate;
+      })
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
 
     const newsContainer = document.getElementById("newsList");
     newsContainer.innerHTML = "";
-    
+
     if (filteredNews.length === 0) {
       newsContainer.innerHTML = "<p>No relevant news found in the last 30 days.</p>";
       return;
@@ -375,10 +367,12 @@
 
     filteredNews.forEach(article => {
       const div = document.createElement("div");
-      div.className = "news-item";
-      const dateStr = new Date(article.date).toLocaleDateString();
+      const newsDate = new Date(article.date);
+      const isNew = newsDate >= threeDaysAgo;
+      div.className = "news-item" + (isNew ? " new" : "");
+      const dateStr = newsDate.toLocaleDateString();
       div.innerHTML = `
-        <h3>${article.title}</h3>
+        <h3>${article.title}${isNew ? '<span class="badge-new">NEW</span>' : ''}</h3>
         <p><strong>${dateStr}</strong></p>
         <p>${article.description}</p>
       `;
