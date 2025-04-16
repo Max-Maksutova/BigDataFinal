@@ -2,179 +2,380 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tariff News Impact Dashboard</title>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f1f5f9;
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-light: #93c5fd;
+      --accent: #8b5cf6;
+      --accent-light: #ddd6fe;
+      --text-dark: #1f2937;
+      --text-light: #6b7280;
+      --bg-light: #f9fafb;
+      --bg-white: #ffffff;
+      --bg-dark: #f3f4f6;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+    }
+    
+    * {
+      box-sizing: border-box;
       margin: 0;
-      padding: 30px;
-      color: #1f2937;
+      padding: 0;
     }
+    
+    body {
+      font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(to bottom, #f1f5f9, #e2e8f0);
+      margin: 0;
+      padding: 0;
+      color: var(--text-dark);
+      min-height: 100vh;
+    }
+    
     .container {
-      max-width: 1000px;
-      margin: auto;
-      background: #f3f4f6;
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
     }
-    h1 {
-      font-size: 2.2rem;
+    
+    .dashboard {
+      background: var(--bg-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      padding: 2rem;
+    }
+    
+    .dashboard-header {
+      text-align: center;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid #e5e7eb;
+      margin-bottom: 2rem;
+    }
+    
+    .dashboard-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       margin-bottom: 0.5rem;
-      color: #111827;
     }
-    p.description {
+    
+    .team-info {
+      font-size: 1rem;
+      color: var(--text-light);
+      margin-bottom: 1rem;
+    }
+    
+    .dashboard-description {
+      max-width: 750px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+      color: var(--text-light);
       font-size: 1.1rem;
-      color: #4b5563;
-      margin-bottom: 30px;
     }
-    .form-group {
+    
+    .controls {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 30px;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding: 1.25rem;
+      background-color: var(--bg-light);
+      border-radius: var(--radius-md);
+      border: 1px solid #e5e7eb;
     }
-    select, button {
-      padding: 12px 14px;
-      font-size: 1rem;
-      border-radius: 8px;
-      border: 1px solid #d1d5db;
-    }
-    button {
-      background-color: #2563eb;
-      color: white;
+    
+    .control-label {
       font-weight: 600;
+      color: var(--text-dark);
+      flex: 0 0 100%;
+      margin-bottom: 0.5rem;
+    }
+    
+    select {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid #d1d5db;
+      background-color: var(--bg-white);
+      box-shadow: var(--shadow-sm);
+      color: var(--text-dark);
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1.5rem;
+      padding-right: 2.5rem;
+    }
+    
+    button {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
       cursor: pointer;
-      transition: background-color 0.2s, transform 0.1s;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-md);
     }
+    
     button:hover {
-      background-color: #1d4ed8;
-      transform: translateY(-1px);
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
     }
+    
+    button:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .chart-container {
+      background-color: var(--bg-white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    .chart-container h3 {
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+      color: var(--text-dark);
+    }
+    
     #chart, #percentChart {
-      background-color: #fff;
-      padding: 10px;
-      border-radius: 12px;
-      box-shadow: inset 0 0 0 1px #e5e7eb;
-      text-align: center;
-      margin-top: 30px;
+      width: 100%;
+      min-height: 150px;
     }
-    h2 {
-      font-size: 1.5rem;
-      margin-top: 40px;
-      margin-bottom: 20px;
-      color: #1f2937;
+    
+    .section-title {
+      font-size: 1.75rem;
+      margin: 2.5rem 0 1.5rem;
+      color: var(--text-dark);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
     }
+    
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background-color: #e5e7eb;
+      margin-left: 1rem;
+    }
+    
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
     .news-item {
-      margin-bottom: 20px;
-      padding: 18px 20px;
-      border-left: 4px solid #2563eb;
-      background-color: #f9fafb;
-      border-radius: 10px;
-      transition: background-color 0.2s;
+      background-color: var(--bg-white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border-top: 4px solid var(--primary);
     }
+    
     .news-item:hover {
-      background-color: #f3f4f6;
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
     }
+    
     .news-item.new {
-      background-color: #e0f2fe;
+      border-top: 4px solid var(--accent);
     }
-    .news-item h3 {
-      margin: 0;
+    
+    .news-content {
+      padding: 1.5rem;
+    }
+    
+    .news-title {
       font-size: 1.1rem;
-      color: #1e40af;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--text-dark);
+      line-height: 1.4;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
     }
-    .news-item p {
-      margin: 6px 0;
-      font-size: 0.95rem;
-      color: #374151;
-    }
-    .news-item a {
-      color: #2563eb;
-      font-weight: 500;
-      text-decoration: none;
-    }
-    .news-item a:hover {
-      text-decoration: underline;
-    }
+    
     .badge-new {
       display: inline-block;
-      background-color: #2563eb;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
       color: white;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: bold;
-      padding: 2px 6px;
-      border-radius: 6px;
-      margin-left: 8px;
+      padding: 0.2rem 0.5rem;
+      border-radius: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
     }
-    .footer {
-      margin-top: 60px;
+    
+    .news-date {
+      font-weight: 600;
+      color: var(--text-light);
+      margin-bottom: 0.75rem;
       font-size: 0.9rem;
-      color: #6b7280;
-      text-align: center;
     }
-    @media (max-width: 600px) {
-      .form-group {
+    
+    .news-description {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+    
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+      color: var(--text-light);
+      font-size: 1rem;
+    }
+    
+    .loading::before {
+      content: "";
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      border: 3px solid var(--primary-light);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .dashboard {
+        padding: 1.5rem;
+      }
+      
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .controls {
         flex-direction: column;
+        align-items: stretch;
+      }
+      
+      select, button {
+        width: 100%;
+      }
+      
+      .dashboard-title {
+        font-size: 2rem;
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1 style="text-align: center; color: #2563eb; margin-bottom: 10px; font-size: 2.75rem;">
-      Tariff News Impact Dashboard
-    </h1>
-    <p style="text-align: center; font-size: 1.1rem; color: #4b5563; margin-bottom: 8px;">
-      Max Maksutova, Mollie Schuma, Nicole Sellers, Sarah Wozniak · Team 8 · Spring 2025
-    </p>
-    <p class="description" style="max-width:750px; margin: 20px auto 40px; text-align: center;">
-      This dashboard visualizes how stock prices respond to tariff-related news events.
-      It displays the last 30 days of stock data with vertical news lines.
-      Hover over a news line to see the corresponding article details and its impact.
-    </p>
-    <div class="form-group">
-      <select id="stockSelect">
-        <option value="AAPL">Apple (AAPL)</option>
-        <option value="AMZN">Amazon (AMZN)</option>
-        <option value="GOOGL">Google (GOOGL)</option>
-        <option value="META">Meta (META)</option>
-        <option value="MSFT">Microsoft (MSFT)</option>
-        <option value="NVDA">Nvidia (NVDA)</option>
-        <option value="TSLA">Tesla (TSLA)</option>
-        <option value="ALL">All Stocks Combined</option>
-      </select>
-      <button onclick="pullData()">Pull Data</button>
-    </div>
-    <div id="chart">Loading chart...</div>
-    <div id="percentChart">Loading percent change chart...</div>
-    <h2>Recent Tariff News (Last 30 Days)</h2>
-    <div id="newsList">Loading news...</div>
-    <div class="footer">
-      Dashboard powered by local JSON files | Designed by Team 8
+    <div class="dashboard">
+      <div class="dashboard-header">
+        <h1 class="dashboard-title">Tariff News Impact Dashboard</h1>
+        <p class="team-info">Max Maksutova, Mollie Schuma, Nicole Sellers, Sarah Wozniak · Team 8 · Spring 2025</p>
+        <p class="dashboard-description">
+          This dashboard visualizes how stock prices respond to tariff-related news events.
+          It displays the last 30 days of stock data with vertical news lines.
+          Hover over a news line to see the corresponding article details and its impact.
+        </p>
+      </div>
+      
+      <div class="controls">
+        <label class="control-label">Select a stock to analyze:</label>
+        <select id="stockSelect">
+          <option value="AAPL">Apple (AAPL)</option>
+          <option value="AMZN">Amazon (AMZN)</option>
+          <option value="GOOGL">Google (GOOGL)</option>
+          <option value="META">Meta (META)</option>
+          <option value="MSFT">Microsoft (MSFT)</option>
+          <option value="NVDA">Nvidia (NVDA)</option>
+          <option value="TSLA">Tesla (TSLA)</option>
+          <option value="ALL">All Stocks Combined</option>
+        </select>
+        <button onclick="pullData()">Analyze Impact</button>
+      </div>
+      
+      <div class="chart-container">
+        <h3>Stock Price Trend</h3>
+        <div id="chart" class="loading">Loading chart data...</div>
+      </div>
+      
+      <div class="chart-container">
+        <h3>Daily Percent Change</h3>
+        <div id="percentChart" class="loading">Loading percent change data...</div>
+      </div>
+      
+      <h2 class="section-title">Recent Tariff News</h2>
+      <div id="newsList" class="news-grid loading">Loading news...</div>
+      
+      <div class="footer">
+        Dashboard powered by local JSON files | Designed by Team 8
+      </div>
     </div>
   </div>
+
 <script>
     const colorPalette = [
-      "#FFB6C1",  // LightPink
-      "#ADD8E6",  // LightBlue
-      "#D8BFD8",  // Thistle
-      "#C1E1C1",  // LightGreen (replaces violet)
-      "#FFFFE0",  // LightYellow
-      "#F08080",  // LightCoral
-      "#E6E6FA"   // Lavender
+      "#4f46e5",  // Indigo
+      "#2563eb",  // Blue
+      "#9333ea",  // Purple
+      "#06b6d4",  // Cyan
+      "#059669",  // Emerald
+      "#f59e0b",  // Amber
+      "#ef4444"   // Red
     ];
-
 
   const validStockSymbols = ['AAPL', 'AMZN', 'GOOGL', 'META', 'MSFT', 'NVDA', 'TSLA'];
 
+  // Pull data when the page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    pullData();
+  });
+
   async function pullData() {
     const symbol = document.getElementById("stockSelect").value;
-    document.getElementById("chart").innerHTML = "Loading chart...";
-    document.getElementById("percentChart").innerHTML = "Loading percent change chart...";
-    document.getElementById("newsList").innerHTML = "Loading news...";
+    document.getElementById("chart").innerHTML = "";
+    document.getElementById("chart").className = "loading";
+    document.getElementById("percentChart").innerHTML = "";
+    document.getElementById("percentChart").className = "loading";
+    document.getElementById("newsList").innerHTML = "";
+    document.getElementById("newsList").className = "news-grid loading";
 
     let chartData = [];
     if (symbol === "ALL") {
@@ -192,10 +393,15 @@
     const allNews = await fetchTariffNews();
 
     if (!chartData || chartData.length === 0 || chartData.every(item => item.dates.length === 0)) {
+      document.getElementById("chart").className = "";
       document.getElementById("chart").innerHTML = "No stock data available for the selected symbol.";
       return;
     }
 
+    document.getElementById("chart").className = "";
+    document.getElementById("percentChart").className = "";
+    document.getElementById("newsList").className = "news-grid";
+    
     setChart(chartData, allNews);
     renderNews(allNews, chartData);
   }
@@ -269,7 +475,7 @@
         mode: 'lines+markers',
         name: symbol,
         type: 'scatter',
-        line: { color: colorPalette[i % colorPalette.length], width: 2 },
+        line: { color: colorPalette[i % colorPalette.length], width: 3 },
         marker: { size: 8 },
         text: hoverText,
         hoverinfo: 'text'
@@ -284,7 +490,7 @@
       y1: 1,
       xref: 'x',
       yref: 'paper',
-      line: { color: "#DDA0DD", width: 1, dash: 'dot' }
+      line: { color: "#9333ea", width: 1.5, dash: 'dot' }
     }));
 
     const stockData = dataArray.length === 1 ? dataArray[0] : null;
@@ -320,30 +526,32 @@
       name: 'News'
     };
 
-      Plotly.newPlot("chart", [...stockTraces, newsHoverTrace], {
-        title: {
-          text: "Stock Price Over Time (Last 30 Days)",
-          font: { family: "Segoe UI Bold, sans-serif", size: 20, color: "#1f2937" }
-        },
-        xaxis: {
-          title: { text: "Date", font: { family: "Segoe UI Bold", size: 14, color: "#1f2937" } },
-          tickfont: { family: "Segoe UI", size: 12, color: "#1f2937"}
-        },
-        yaxis: {
-          title: { text: "Price (USD)", font: { family: "Segoe UI Bold", size: 14, color: "#1f2937" } },
-          tickfont: { family: "Segoe UI", size: 12, color: "#1f2937" }
-        },
-        legend: {
-          orientation: "h",
-          y: -0.2,
-          font: { family: "Segoe UI Bold", size: 12, color: "#1f2937" }
-        },
-        paper_bgcolor: "#e5e7eb",
-        plot_bgcolor: "#e5e7eb",
-        height: chartHeight,
-        shapes: newsShapes
-      });
-
+    Plotly.newPlot("chart", [...stockTraces, newsHoverTrace], {
+      title: {
+        text: "",
+        font: { family: "Inter, Segoe UI, sans-serif", size: 20, color: "#1f2937" }
+      },
+      xaxis: {
+        title: { text: "Date", font: { family: "Inter, Segoe UI, sans-serif", size: 14, color: "#1f2937" } },
+        tickfont: { family: "Inter, Segoe UI, sans-serif", size: 12, color: "#6b7280"},
+        gridcolor: '#f3f4f6'
+      },
+      yaxis: {
+        title: { text: "Price (USD)", font: { family: "Inter, Segoe UI, sans-serif", size: 14, color: "#1f2937" } },
+        tickfont: { family: "Inter, Segoe UI, sans-serif", size: 12, color: "#6b7280" },
+        gridcolor: '#f3f4f6'
+      },
+      legend: {
+        orientation: "h",
+        y: -0.2,
+        font: { family: "Inter, Segoe UI, sans-serif", size: 12, color: "#1f2937" }
+      },
+      paper_bgcolor: "#ffffff",
+      plot_bgcolor: "#ffffff",
+      height: chartHeight,
+      shapes: newsShapes,
+      margin: { t: 20, b: 60, l: 60, r: 20 }
+    });
 
     const percentChangeTraces = dataArray.map(({ symbol, dates, prices }, i) => {
       const percentChanges = prices.map((price, idx) => {
@@ -356,8 +564,8 @@
         mode: 'lines+markers',
         name: symbol,
         type: 'scatter',
-        line: { color: colorPalette[i % colorPalette.length], width: 2 },
-        marker: { size: 10 }
+        line: { color: colorPalette[i % colorPalette.length], width: 3 },
+        marker: { size: 8 }
       };
     });
 
@@ -396,9 +604,9 @@
 
     Plotly.newPlot("percentChart", [...percentChangeTraces, percentNewsHoverTrace], {
       title: {
-        text: "Daily Percent Change (Last 30 Days)",
+        text: "",
         font: {
-          family: "Segoe UI Bold, sans-serif",
+          family: "Inter, Segoe UI, sans-serif",
           size: 20,
           color: "#1f2937"
         }
@@ -407,45 +615,47 @@
         title: {
           text: "Date",
           font: {
-            family: "Segoe UI Bold",
+            family: "Inter, Segoe UI, sans-serif",
             size: 14,
             color: "#1f2937"
           }
         },
         tickfont: {
-          family: "Segoe UI",
+          family: "Inter, Segoe UI, sans-serif",
           size: 12,
-          color: "#1f2937"
-        }
+          color: "#6b7280"
+        },
+        gridcolor: '#f3f4f6'
       },
       yaxis: {
         title: {
           text: "Percent Change (%)",
           font: {
-            family: "Segoe UI Bold",
+            family: "Inter, Segoe UI, sans-serif",
             size: 14,
             color: "#1f2937"
           }
         },
         tickfont: {
-          family: "Segoe UI",
+          family: "Inter, Segoe UI, sans-serif",
           size: 12,
-          color: "#1f2937"
-        }
+          color: "#6b7280"
+        },
+        gridcolor: '#f3f4f6'
       },
       legend: {
         orientation: "h",
         y: -0.2,
         font: {
-          family: "Segoe UI Bold",
+          family: "Inter, Segoe UI, sans-serif",
           size: 12,
           color: "#1f2937"
         }
       },
-      paper_bgcolor: "#e5e7eb",
-      plot_bgcolor: "#e5e7eb",
+      paper_bgcolor: "#ffffff",
+      plot_bgcolor: "#ffffff",
       height: percentChartHeight,
-      margin: { t: 60, b: 60, l: 60, r: 30 },
+      margin: { t: 20, b: 60, l: 60, r: 20 },
       shapes: newsShapes
     });
   }
@@ -485,16 +695,21 @@
       const newsDate = new Date(article.date);
       const isNew = newsDate >= threeDaysAgo;
       div.className = "news-item" + (isNew ? " new" : "");
-      const dateStr = newsDate.toLocaleDateString();
-      div.innerHTML = `
-        <h3>${article.title}${isNew ? '<span class="badge-new">NEW</span>' : ''}</h3>
-        <p><strong>${dateStr}</strong></p>
-        <p>${article.description}</p>
+      const dateStr = newsDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+      
+      const contentDiv = document.createElement("div");
+      contentDiv.className = "news-content";
+      
+      contentDiv.innerHTML = `
+        <h3 class="news-title">${article.title}${isNew ? '<span class="badge-new">NEW</span>' : ''}</h3>
+        <p class="news-date">${dateStr}</p>
+        <p class="news-description">${article.description}</p>
       `;
+      
+      div.appendChild(contentDiv);
       newsContainer.appendChild(div);
     });
   }
 </script>
 </body>
 </html>
-
