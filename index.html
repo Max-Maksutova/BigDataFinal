@@ -230,6 +230,10 @@
   function setChart(dataArray, allNews) {
     const chartEl = document.getElementById("chart");
     chartEl.innerHTML = "";
+    const isAllStocks = dataArray.length > 1;
+    const chartHeight = isAllStocks ? 650 : 450;
+    const percentChartHeight = isAllStocks ? 650 : 450;
+
 
     let minDate = null, maxDate = null;
     dataArray.forEach(({ dates }) => {
@@ -317,6 +321,7 @@
       title: "Stock Price Over Time (Last 30 Days)",
       xaxis: { title: "Date", type: "date", range: [minDateStr, maxDateStr] },
       yaxis: { title: "Price (USD)" },
+      height: chartHeight,
       shapes: newsShapes,
       legend: { orientation: "h", y: -0.2 }
     });
@@ -375,7 +380,7 @@ document.getElementById("percentChart").innerHTML = "";
       title: "Daily Percent Change (Last 30 Days)",
       xaxis: { title: "Date", type: "date", range: [minDateStr, maxDateStr] },
       yaxis: { title: "Percent Change (%)" },
-      height: 450,
+      height: percentChartHeight,
       margin: { t: 60, b: 60, l: 60, r: 30 },
       shapes: newsShapes,
       legend: { orientation: "h", y: -0.2 }
