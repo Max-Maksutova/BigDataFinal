@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tariff News Impact Dashboard</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f1f5f9;
+      margin: 0;
+      padding: 30px;
+      color: #1f2937;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: #f3f4f6;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    }
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+      color: #111827;
+    }
+    p.description {
+      font-size: 1.1rem;
+      color: #4b5563;
+      margin-bottom: 30px;
+    }
+    .form-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+    select, button {
+      padding: 12px 14px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+    }
+    button {
+      background-color: #2563eb;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+    button:hover {
+      background-color: #1d4ed8;
+      transform: translateY(-1px);
+    }
+    #chart {
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 12px;
+      box-shadow: inset 0 0 0 1px #e5e7eb;
+      text-align: center;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      color: #1f2937;
+    }
+    .news-item {
+      margin-bottom: 20px;
+      padding: 18px 20px;
+      border-left: 4px solid #2563eb;
+      background-color: #f9fafb;
+      border-radius: 10px;
+      transition: background-color 0.2s;
+    }
+    .news-item:hover {
+      background-color: #f3f4f6;
+    }
+    .news-item h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: #1e40af;
+    }
+    .news-item p {
+      margin: 6px 0;
+      font-size: 0.95rem;
+      color: #374151;
+    }
+    .news-item a {
+      color: #2563eb;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .news-item a:hover {
+      text-decoration: underline;
+    }
+    .footer {
+      margin-top: 60px;
+      font-size: 0.9rem;
+      color: #6b7280;
+      text-align: center;
+    }
+    @media (max-width: 600px) {
+      .form-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 style="text-align: center; color: #2563eb; margin-bottom: 10px; font-size: 2.75rem;">
+      Tariff News Impact Dashboard
+    </h1>
+    <p style="text-align: center; font-size: 1.1rem; color: #4b5563; margin-bottom: 8px;">
+      Max Maksutova, Mollie Schuma, Nicole Sellers, Sarah Wozniak · Team 8 · Spring 2025
+    </p>
+    <p class="description" style="max-width:750px; margin: 20px auto 40px; text-align: center;">
+      This dashboard visualizes how stock prices respond to tariff-related news events.
+      It displays the last 30 days of stock data with vertical news lines.
+      Hover over a news line to see the corresponding article details and its impact.
+    </p>
+    <div class="form-group">
+      <select id="stockSelect">
+        <option value="AAPL">Apple (AAPL)</option>
+        <option value="AMZN">Amazon (AMZN)</option>
+        <option value="GOOGL">Google (GOOGL)</option>
+        <option value="META">Meta (META)</option>
+        <option value="MSFT">Microsoft (MSFT)</option>
+        <option value="NVDA">Nvidia (NVDA)</option>
+        <option value="TSLA">Tesla (TSLA)</option>
+        <option value="ALL">All Stocks Combined</option>
+      </select>
+      <button onclick="pullData()">Pull Data</button>
+    </div>
+    <div id="chart">Loading chart...</div>
+    <h2>Recent Tariff News (Last 30 Days)</h2>
+    <div id="newsList">Loading news...</div>
+    <div class="footer">
+      Dashboard powered by local JSON files | Designed by Max & Team
+    </div>
+  </div>
+  
+<script>
+  // Define a cute pastel color palette with no greens.
+  const colorPalette = [
+    "#FFB6C1",  // LightPink
+    "#ADD8E6",  // LightBlue
+    "#D8BFD8",  // Thistle
+    "#E0BBE4",  // Pastel Violet (replacing green)
+    "#FFFFE0",  // LightYellow
+    "#F08080",  // LightCoral
+    "#E6E6FA"   // Lavender
+  ];
+
+  const validStockSymbols = ['AAPL', 'AMZN', 'GOOGL', 'META', 'MSFT', 'NVDA', 'TSLA'];
+
+  async function pullData() {
+    const symbol = document.getElementById("stockSelect").value;
+    console.log("Selected symbol:", symbol);
+    document.getElementById("chart").innerHTML = "Loading chart...";
+    document.getElementById("newsList").innerHTML = "Loading news...";
+    
+    let chartData = [];
+    if (symbol === "ALL") {
+      for (const sym of validStockSymbols) {
+        const data = await fetchStockData(sym);
+        if(data.dates.length > 0){
+          chartData.push({ symbol: sym, ...data });
+        }
+      }
+    } else {
+      const data = await fetchStockData(symbol);
+      chartData.push({ symbol, ...data });
+    }
+    
+    const allNews = await fetchTariffNews();
+    
+    if (!chartData || chartData.length === 0 || chartData.every(item => item.dates.length === 0)) {
+      document.getElementById("chart").innerHTML = "No stock data available for the selected symbol.";
+      return;
+    }
+    
+    setChart(chartData, allNews);
+    renderNews(allNews, chartData);
+  }
+
+  async function fetchStockData(symbol) {
+    try {
+      const jsonFileName = symbol.toLowerCase() + ".json";
+      const res = await fetch(jsonFileName);
+      const data = await res.json();
+      const timeSeries = data["Time Series (Daily)"];
+      const sortedDates = Object.keys(timeSeries).sort();  // oldest → newest
+      const dates = sortedDates.slice(-30);                // last 30 days only
+      const prices = dates.map(date => parseFloat(timeSeries[date]["4. close"]));
+      return { dates, prices };
+    } catch (error) {
+      console.error("Failed to load JSON file for " + symbol, error);
+      return { dates: [], prices: [] };
+    }
+  }
+
+  async function fetchTariffNews() {
+    try {
+      const res = await fetch("news.json");
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.error("Failed to load news JSON file", error);
+      return [{
+        date: new Date().toISOString().split("T")[0],
+        title: "Unable to fetch news. Try again later.",
+        description: ""
+      }];
+    }
+  }
+
+  function setChart(dataArray, allNews) {
+    const chartEl = document.getElementById("chart");
+    chartEl.innerHTML = "";  // Clear the "Loading chart..." text
+
+    let minDate = null, maxDate = null;
+    dataArray.forEach(({ dates }) => {
+      if (dates.length) {
+        const dMin = new Date(dates[0]);
+        const dMax = new Date(dates[dates.length - 1]);
+        if (!minDate || dMin < minDate) minDate = dMin;
+        if (!maxDate || dMax > maxDate) maxDate = dMax;
+      }
+    });
+    
+    if (!minDate || !maxDate) {
+      chartEl.innerHTML = "Invalid stock data.";
+      return;
+    }
+    
+    const minDateStr = minDate.toISOString().split("T")[0];
+    const maxDateStr = maxDate.toISOString().split("T")[0];
+
+    const filteredNews = allNews.filter(article => {
+      const newsDate = new Date(article.date);
+      return newsDate >= minDate && newsDate <= maxDate;
+    });
+
+    const stockTraces = dataArray.map(({ symbol, dates, prices }, i) => ({
+      x: dates,
+      y: prices,
+      mode: 'lines+markers',
+      name: symbol,
+      type: 'scatter',
+      line: { color: colorPalette[i % colorPalette.length], width: 2 },
+      marker: { color: colorPalette[i % colorPalette.length], size: 6 }
+    }));
+
+    const stockData = (dataArray.length === 1) ? dataArray[0] : null;
+    let midY = null;
+    if (!stockData) {
+      let allPrices = [];
+      dataArray.forEach(item => { allPrices = allPrices.concat(item.prices); });
+      const yMin = Math.min(...allPrices);
+      const yMax = Math.max(...allPrices);
+      midY = (yMin + yMax) / 2;
+    }
+    
+    const newsShapes = filteredNews.map(article => ({
+      type: 'line',
+      x0: article.date,
+      x1: article.date,
+      y0: 0,
+      y1: 1,
+      xref: 'x',
+      yref: 'paper',
+      line: { color: "#DDA0DD", width: 1, dash: 'dot' }
+    }));
+
+    const newsHoverData = filteredNews.map(article => {
+      const articleDateStr = article.date;
+      let yVal = stockData ? null : midY;
+      let impactText = "";
+      if (stockData) {
+        const idx = stockData.dates.indexOf(articleDateStr);
+        if (idx !== -1) {
+          yVal = stockData.prices[idx];
+          if (idx > 0) {
+            const prev = stockData.prices[idx - 1];
+            const impact = ((yVal - prev) / prev) * 100;
+            impactText = `Impact: ${impact.toFixed(2)}%`;
+          }
+        } else {
+          yVal = midY;
+        }
+      }
+      return {
+        x: articleDateStr,
+        y: yVal,
+        hoverText: `<b>${article.title}</b><br>${article.description}<br>${impactText}`
+      };
+    });
+
+    const newsHoverTrace = {
+      x: newsHoverData.map(d => d.x),
+      y: newsHoverData.map(d => d.y),
+      mode: 'markers',
+      marker: { size: 12, color: 'rgba(0,0,0,0.01)' },
+      hoverinfo: 'text',
+      text: newsHoverData.map(d => d.hoverText),
+      name: 'News'
+    };
+
+    Plotly.newPlot("chart", [...stockTraces, newsHoverTrace], {
+      title: "Stock Price Over Time (Last 30 Days)",
+      xaxis: { title: "Date", type: "date", range: [minDateStr, maxDateStr] },
+      yaxis: { title: "Price (USD)" },
+      shapes: newsShapes,
+      legend: { orientation: "h", y: -0.2 }
+    });
+  }
+
+  function renderNews(allNews, dataArray) {
+    let minDate = null, maxDate = null;
+    dataArray.forEach(({ dates }) => {
+      if (dates.length) {
+        const dMin = new Date(dates[0]);
+        const dMax = new Date(dates[dates.length - 1]);
+        if (!minDate || dMin < minDate) minDate = dMin;
+        if (!maxDate || dMax > maxDate) maxDate = dMax;
+      }
+    });
+    
+    const filteredNews = allNews.filter(article => {
+      const newsDate = new Date(article.date);
+      return newsDate >= minDate && newsDate <= maxDate;
+    });
+
+    const newsContainer = document.getElementById("newsList");
+    newsContainer.innerHTML = "";
+    
+    if (filteredNews.length === 0) {
+      newsContainer.innerHTML = "<p>No relevant news found in the last 30 days.</p>";
+      return;
+    }
+
+    filteredNews.forEach(article => {
+      const div = document.createElement("div");
+      div.className = "news-item";
+      const dateStr = new Date(article.date).toLocaleDateString();
+      div.innerHTML = `
+        <h3>${article.title}</h3>
+        <p><strong>${dateStr}</strong></p>
+        <p>${article.description}</p>
+      `;
+      newsContainer.appendChild(div);
+    });
+  }
+</script>
+</body>
+</html>
