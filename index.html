@@ -249,15 +249,25 @@
       return newsDate >= minDate && newsDate <= maxDate;
     });
 
-    const stockTraces = dataArray.map(({ symbol, dates, prices }, i) => ({
-      x: dates,
-      y: prices,
-      mode: 'lines+markers',
-      name: symbol,
-      type: 'scatter',
-      line: { color: colorPalette[i % colorPalette.length], width: 2 },
-      marker: { size: 8 }
-    }));
+    const stockTraces = dataArray.map(({ symbol, dates, prices }, i) => {
+      let hoverText = prices.map((price, idx) => {
+        if (idx === 0) return `${symbol}: ${price.toFixed(2)} (—%)`;
+        const pctChange = ((price - prices[idx - 1]) / prices[idx - 1]) * 100;
+        return `${symbol}: ${price.toFixed(2)} (${pctChange.toFixed(2)}%)`;
+      });
+    
+      return {
+        x: dates,
+        y: prices,
+        mode: 'lines+markers',
+        name: symbol,
+        type: 'scatter',
+        line: { color: colorPalette[i % colorPalette.length], width: 2 },
+        marker: { size: 8 },
+        text: hoverText,
+        hoverinfo: 'text'
+      };
+    });
 
     const newsShapes = filteredNews.map(article => ({
       type: 'line',
@@ -326,48 +336,50 @@
         marker: { size: 10 }
       };
     });
+    
+document.getElementById("percentChart").innerHTML = "";
 
     // --- Create Percent Change Chart with News Lines ---
-const percentNewsHoverData = filteredNews.map(article => {
-  const dateStr = article.date;
-  let yVal = null;
-  let percentText = "";
-  if (stockData) {
-    const idx = stockData.dates.indexOf(dateStr);
-    if (idx !== -1 && idx > 0) {
-      const prev = stockData.prices[idx - 1];
-      const curr = stockData.prices[idx];
-      const pctChange = ((curr - prev) / prev) * 100;
-      yVal = ((curr - prev) / prev) * 100;
-      percentText = `${pctChange.toFixed(2)}%`;
-    }
-  }
-  return {
-    x: dateStr,
-    y: yVal,
-    hoverText: `<b>${article.title}</b><br>Date: ${dateStr}<br>Change: ${percentText}`
-  };
-});
+    const percentNewsHoverData = filteredNews.map(article => {
+      const dateStr = article.date;
+      let yVal = null;
+      let percentText = "";
+      if (stockData) {
+        const idx = stockData.dates.indexOf(dateStr);
+        if (idx !== -1 && idx > 0) {
+          const prev = stockData.prices[idx - 1];
+          const curr = stockData.prices[idx];
+          const pctChange = ((curr - prev) / prev) * 100;
+          yVal = ((curr - prev) / prev) * 100;
+          percentText = `${pctChange.toFixed(2)}%`;
+        }
+      }
+      return {
+        x: dateStr,
+        y: yVal,
+        hoverText: `<b>${article.title}</b><br>Date: ${dateStr}<br>Change: ${percentText}`
+      };
+    });
 
-const percentNewsHoverTrace = {
-  x: percentNewsHoverData.map(d => d.x),
-  y: percentNewsHoverData.map(d => d.y),
-  mode: 'markers',
-  marker: { size: 12, color: 'rgba(0,0,0,0.01)' },
-  hoverinfo: 'text',
-  text: percentNewsHoverData.map(d => d.hoverText),
-  name: 'News Impact'
-};
-
-Plotly.newPlot("percentChart", [...percentChangeTraces, percentNewsHoverTrace], {
-  title: "Daily Percent Change (Last 30 Days)",
-  xaxis: { title: "Date", type: "date", range: [minDateStr, maxDateStr] },
-  yaxis: { title: "Percent Change (%)" },
-  height: 450,
-  margin: { t: 60, b: 60, l: 60, r: 30 },
-  shapes: newsShapes,
-  legend: { orientation: "h", y: -0.2 }
-});
+    const percentNewsHoverTrace = {
+      x: percentNewsHoverData.map(d => d.x),
+      y: percentNewsHoverData.map(d => d.y),
+      mode: 'markers',
+      marker: { size: 12, color: 'rgba(0,0,0,0.01)' },
+      hoverinfo: 'text',
+      text: percentNewsHoverData.map(d => d.hoverText),
+      name: 'News Impact'
+    };
+    
+    Plotly.newPlot("percentChart", [...percentChangeTraces, percentNewsHoverTrace], {
+      title: "Daily Percent Change (Last 30 Days)",
+      xaxis: { title: "Date", type: "date", range: [minDateStr, maxDateStr] },
+      yaxis: { title: "Percent Change (%)" },
+      height: 450,
+      margin: { t: 60, b: 60, l: 60, r: 30 },
+      shapes: newsShapes,
+      legend: { orientation: "h", y: -0.2 }
+    });
 
   }
 
