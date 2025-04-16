@@ -153,10 +153,9 @@
     <h2>Recent Tariff News (Last 30 Days)</h2>
     <div id="newsList">Loading news...</div>
     <div class="footer">
-      Dashboard powered by local JSON files | Designed by Max & Team
+      Dashboard powered by local JSON files | Designed by Team 8
     </div>
   </div>
-  
 <script>
   const colorPalette = [
     "#e6194b", "#3cb44b", "#0082c8", "#f58231",
@@ -234,7 +233,6 @@
     const chartHeight = isAllStocks ? 650 : 450;
     const percentChartHeight = isAllStocks ? 650 : 450;
 
-
     let minDate = null, maxDate = null;
     dataArray.forEach(({ dates }) => {
       if (dates.length) {
@@ -255,11 +253,11 @@
 
     const stockTraces = dataArray.map(({ symbol, dates, prices }, i) => {
       let hoverText = prices.map((price, idx) => {
-        if (idx === 0) return ${symbol}: ${price.toFixed(2)} (—%);
+        if (idx === 0) return `${symbol}: ${price.toFixed(2)} (—%)`;
         const pctChange = ((price - prices[idx - 1]) / prices[idx - 1]) * 100;
-        return ${symbol}: ${price.toFixed(2)} (${pctChange.toFixed(2)}%);
+        return `${symbol}: ${price.toFixed(2)} (${pctChange.toFixed(2)}%)`;
       });
-    
+
       return {
         x: dates,
         y: prices,
@@ -296,14 +294,14 @@
           if (idx > 0) {
             const prev = stockData.prices[idx - 1];
             const impact = ((yVal - prev) / prev) * 100;
-            impactText = Impact: ${impact.toFixed(2)}%;
+            impactText = `Impact: ${impact.toFixed(2)}%`;
           }
         }
       }
       return {
         x: dateStr,
         y: yVal,
-        hoverText: <b>${article.title}</b><br>${article.description}<br>${impactText}
+        hoverText: `<b>${article.title}</b><br>${article.description}<br>${impactText}`
       };
     });
 
@@ -341,10 +339,9 @@
         marker: { size: 10 }
       };
     });
-    
-document.getElementById("percentChart").innerHTML = "";
 
-    // --- Create Percent Change Chart with News Lines ---
+    document.getElementById("percentChart").innerHTML = "";
+
     const percentNewsHoverData = filteredNews.map(article => {
       const dateStr = article.date;
       let yVal = null;
@@ -355,14 +352,14 @@ document.getElementById("percentChart").innerHTML = "";
           const prev = stockData.prices[idx - 1];
           const curr = stockData.prices[idx];
           const pctChange = ((curr - prev) / prev) * 100;
-          yVal = ((curr - prev) / prev) * 100;
-          percentText = ${pctChange.toFixed(2)}%;
+          yVal = pctChange;
+          percentText = `${pctChange.toFixed(2)}%`;
         }
       }
       return {
         x: dateStr,
         y: yVal,
-        hoverText: <b>${article.title}</b><br>Date: ${dateStr}<br>Change: ${percentText}
+        hoverText: `<b>${article.title}</b><br>Date: ${dateStr}<br>Change: ${percentText}`
       };
     });
 
@@ -375,7 +372,7 @@ document.getElementById("percentChart").innerHTML = "";
       text: percentNewsHoverData.map(d => d.hoverText),
       name: 'News Impact'
     };
-    
+
     Plotly.newPlot("percentChart", [...percentChangeTraces, percentNewsHoverTrace], {
       title: "Daily Percent Change (Last 30 Days)",
       xaxis: { title: "Date", type: "date", range: [minDateStr, maxDateStr] },
@@ -385,7 +382,6 @@ document.getElementById("percentChart").innerHTML = "";
       shapes: newsShapes,
       legend: { orientation: "h", y: -0.2 }
     });
-
   }
 
   function renderNews(allNews, dataArray) {
@@ -424,14 +420,15 @@ document.getElementById("percentChart").innerHTML = "";
       const isNew = newsDate >= threeDaysAgo;
       div.className = "news-item" + (isNew ? " new" : "");
       const dateStr = newsDate.toLocaleDateString();
-      div.innerHTML = 
+      div.innerHTML = `
         <h3>${article.title}${isNew ? '<span class="badge-new">NEW</span>' : ''}</h3>
         <p><strong>${dateStr}</strong></p>
         <p>${article.description}</p>
-      ;
+      `;
       newsContainer.appendChild(div);
     });
   }
 </script>
 </body>
 </html>
+
