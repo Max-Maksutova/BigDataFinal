@@ -1,92 +1,94 @@
-[
-  {
-    "date": "2024-11-25",
-    "title": "Trump Threatens Tariffs on Key Trade Partners",
-    "description": "President-elect Trump signals plans to impose a 25% tariff on all products from Mexico, China, and Canada upon taking office."
-  },
-  {
-    "date": "2025-01-20",
-    "title": "Inauguration Day Tariff Focus",
-    "description": "During his inauguration, President Trump announces the creation of the External Revenue Service to collect tariffs and pledges to use tariffs to boost U.S. wealth."
-  },
-  {
-    "date": "2025-02-04",
-    "title": "10% Tariff on All Chinese Imports",
-    "description": "A 10% tariff is imposed on all Chinese imports, citing national security concerns including fentanyl trafficking."
-  },
-  {
-    "date": "2025-02-25",
-    "title": "Copper Tariff Evaluation Executive Order",
-    "description": "President Trump signs an executive order instructing the Commerce Department to evaluate tariffs on imported copper for national security."
-  },
-  {
-    "date": "2025-03-01",
-    "title": "Lumber Tariff Evaluation Order",
-    "description": "Executive order directs a national security review on tariffs for imported lumber and timber."
-  },
-  {
-    "date": "2025-03-04",
-    "title": "Major Tariffs on Canada, Mexico, and China",
-    "description": "25% tariffs are imposed on Canadian and Mexican imports (10% for Canadian energy). Chinese tariffs double to 20%."
-  },
-  {
-    "date": "2025-03-05",
-    "title": "Temporary Exemptions for Auto Imports",
-    "description": "U.S. automakers receive temporary exemptions from new tariffs on imports from Canada and Mexico."
-  },
-  {
-    "date": "2025-03-10",
-    "title": "China Retaliates with Agricultural Tariffs",
-    "description": "China imposes 15% tariffs on U.S. agricultural goods, including chicken, pork, soybeans, and beef."
-  },
-  {
-    "date": "2025-03-12",
-    "title": "Steel and Aluminum Tariffs",
-    "description": "25% tariffs go into effect on all imported steel and aluminum, removing prior exemptions."
-  },
-  {
-    "date": "2025-03-24",
-    "title": "Oil Tariff Linked to Venezuela Buyers",
-    "description": "Executive order imposes a 25% tariff on imports from countries purchasing oil or gas from Venezuela, effective April 2."
-  },
-  {
-    "date": "2025-03-26",
-    "title": "Imported Cars Tariff Announced",
-    "description": "25% tariffs on almost all imported cars announced, effective April 3. Auto parts tariffs planned for May 3."
-  },
-  {
-    "date": "2025-04-02",
-    "title": "Baseline 10% Tariff Plan Announced",
-    "description": "President Trump announces a 10% baseline tariff on most countries, with higher rates for some nations."
-  },
-  {
-    "date": "2025-04-03",
-    "title": "25% Car Tariff Takes Effect",
-    "description": "25% tariffs on imported cars are implemented as scheduled."
-  },
-  {
-    "date": "2025-04-05",
-    "title": "10% Tariff Policy Goes into Effect",
-    "description": "The baseline 10% tariffs on most countries officially take effect."
-  },
-  {
-    "date": "2025-04-08",
-    "title": "Tariffs on China Rise to 104%",
-    "description": "Tariffs on Chinese goods increase to 104%, including 90% tariffs on de minimis low-cost imports."
-  },
-  {
-    "date": "2025-04-09",
-    "title": "90-Day Pause on Non-China Tariffs",
-    "description": "The Trump administration announces a 90-day delay in implementing new tariffs on most countries, excluding China."
-  },
-  {
-    "date": "2025-04-11",
-    "title": "Tech Goods Tariff Refund Policy",
-    "description": "A memorandum expands reciprocal tariff exemptions to tech goods and provides refunds for tariffs collected since April 5."
-  },
-  {
-    "date": "2025-04-15",
-    "title": "Antidumping Tariff on Mexican Tomatoes",
-    "description": "The administration announces a 21% antidumping tariff on most Mexican tomato imports, effective July 14."
-  }
-]
+{"Title":"We just declared a trade war with the world","Published At":"2025-04-04T22:34:17Z","Source":"The Verge","URL":"https:\/\/www.theverge.com\/business\/643970\/trade-war-consequences-crazy"}
+{"Title":"What would a US-China trade war do to the world economy?","Published At":"2025-04-08T15:50:05Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/c4g2089vznzo"}
+{"Title":"Here's how Trump's tariffs on China, EU and more will work","Published At":"2025-04-02T22:18:33Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/c1jxrnl9xe2o"}
+{"Title":"China Will Show Fewer U.S. Films in Response to Trump Tariffs","Published At":"2025-04-10T16:00:35Z","Source":"Gizmodo.com","URL":"https:\/\/gizmodo.com\/china-us-tariffs-films-hollywood-2000587571"}
+{"Title":"Welcome to trade war TikTok","Published At":"2025-04-14T09:19:57Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/welcome-to-trade-war-tiktok-2025-4"}
+{"Title":"Germany says it 'will not give in' as Trump announces 25% car tariffs","Published At":"2025-03-27T12:09:53Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/cy4vjwzv22eo"}
+{"Title":"What will the Switch 2 cost after the Trump tariffs?","Published At":"2025-04-03T09:04:48Z","Source":"The Verge","URL":"https:\/\/www.theverge.com\/news\/642459\/switch-2-price-donald-trump-tariffs-china-vietnam-cambodia"}
+{"Title":"China calls US a \u2018joke\u2019 as it raises tariff for final time","Published At":"2025-04-11T08:38:12Z","Source":"The Verge","URL":"https:\/\/www.theverge.com\/news\/646949\/china-tariff-increase-trump-retaliation-us-joke"}
+{"Title":"Trump announces a \u201990-day pause\u2019 on tariffs outside of China","Published At":"2025-04-09T17:47:19Z","Source":"The Verge","URL":"https:\/\/www.theverge.com\/news\/646029\/trump-announces-a-90-day-pause-on-tariffs-outside-of-china"}
+{"Title":"Trump threatens to hit China with extra tariffs of 50%, ratcheting up a trade war","Published At":"2025-04-07T16:20:28Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/trump-threatens-china-extra-tariffs-50-percent-trade-war-2025-4"}
+{"Title":"Trump steps back from cliff edge of all-out global trade war","Published At":"2025-04-09T23:31:16Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/cx255d13w13o"}
+{"Title":"Trump\u2019s tariffs are officially in effect, including 104 percent on China","Published At":"2025-04-09T07:54:15Z","Source":"The Verge","URL":"https:\/\/www.theverge.com\/news\/645215\/trump-us-tariffs-china-eu"}
+{"Title":"Arduboy creator says his tiny Game Boy won\u2019t survive Trump\u2019s tariffs","Published At":"2025-04-08T23:06:03Z","Source":"The Verge","URL":"https:\/\/www.theverge.com\/news\/645555\/arduboy-victim-trump-tariffs-us-china-kevin-bates"}
+{"Title":"Is the US making $2bn a day from tariffs? Trump claims fact-checked","Published At":"2025-04-09T16:03:55Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/c7vnnd89e0jo"}
+{"Title":"Don't worry too much about tariffs as they may be 'for the LOLz,' analyst says","Published At":"2025-04-11T15:33:08Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/us-china-tariffs-trump-may-be-shortlived-fears-overplayed-analyst-2025-4"}
+{"Title":"Donald Trump announces tariffs that could raise the price of almost everything you buy","Published At":"2025-04-02T21:47:26Z","Source":"The Verge","URL":"https:\/\/www.theverge.com\/news\/642240\/trump-tariffs-imports-apple-manufacturing"}
+{"Title":"Trump recognises tariff 'transition problems' as US markets fall again","Published At":"2025-04-10T21:29:16Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/crldj87re71o"}
+{"Title":"After a dramatic week, is Trump any closer to his trade goals?","Published At":"2025-04-11T04:01:05Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/c209x48ndjpo"}
+{"Title":"Trump\u2019s tariff plan includes a potential death blow to cheap Chinese e-commerce","Published At":"2025-04-03T16:38:58Z","Source":"The Verge","URL":"https:\/\/www.theverge.com\/news\/642601\/donald-trump-tariffs-de-minimis-shein-temu"}
+{"Title":"Trump\u2019s tariffs killed his TikTok deal","Published At":"2025-04-05T01:50:31Z","Source":"The Verge","URL":"https:\/\/www.theverge.com\/command-line-newsletter\/644038\/trumps-tariffs-tiktok-deal-china-bytedance"}
+{"Title":"China hits back with fresh 125% tariff on US imports","Published At":"2025-04-11T08:27:04Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/trump-tariffs-china-hits-back-125-percent-retaliatory-levy-us-2025-4"}
+{"Title":"The Blunt Force Trauma of the Trump Tariffs","Published At":"2025-04-03T14:44:32Z","Source":"Wired","URL":"https:\/\/www.wired.com\/story\/trump-tariffs-penguins\/"}
+{"Title":"What the president announced - and why it matters","Published At":"2025-04-03T12:28:56Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/c0qnd2x1nn3o"}
+{"Title":"China Raises Tariffs on US Imports To 125%","Published At":"2025-04-11T08:41:00Z","Source":"Slashdot.org","URL":"https:\/\/slashdot.org\/story\/25\/04\/11\/0840215\/china-raises-tariffs-on-us-imports-to-125"}
+{"Title":"TikTok, tariffs, and trials: everything happening in tech\u2019s chaotic April","Published At":"2025-03-31T13:04:56Z","Source":"The Verge","URL":"https:\/\/www.theverge.com\/policy\/638779\/tariffs-tiktok-ban-meta-google-antitrust-trial-april-trump"}
+{"Title":"Here comes the tariff: Brides are scrambling as wedding gowns get caught in Trump's trade war","Published At":"2025-04-13T12:10:02Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/tariffs-trump-china-wedding-dresses-2025-4"}
+{"Title":"BofA warns earnings in this corner of the stock market could be headed for a 20% drop because of tariffs","Published At":"2025-04-08T16:53:44Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/tariff-impact-on-stocks-earnings-housing-market-tariff-trade-war-2025-4"}
+{"Title":"Steve Jackson Games says tariffs are a \u2018seismic shift\u2019 for board games","Published At":"2025-04-03T23:56:34Z","Source":"The Verge","URL":"https:\/\/www.theverge.com\/news\/643173\/trump-tariffs-steve-jackson-board-game-industry"}
+{"Title":"Sen. Grassley Introduces Bipartisan Bill to Claw Back Tariff Power From Trump","Published At":"2025-04-03T18:00:11Z","Source":"Gizmodo.com","URL":"https:\/\/gizmodo.com\/sen-grassley-introduces-bipartisan-bill-to-claw-back-tariff-power-from-trump-2000584718"}
+{"Title":"Katya Adler: Disdain for Europe in US chat horrifies EU","Published At":"2025-03-25T18:21:44Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/c204vl27n2qo"}
+{"Title":"Trump Says Tariffs Will Be Paused for 90 Days (Except China) in Wild Reversal","Published At":"2025-04-09T18:01:57Z","Source":"Gizmodo.com","URL":"https:\/\/gizmodo.com\/trump-says-tariffs-will-be-paused-for-90-days-except-china-in-wild-reversal-2000587150"}
+{"Title":"Trump Threatens 104% Tariffs on China as the Mad King Plays Chicken With the Global Economy","Published At":"2025-04-07T16:30:01Z","Source":"Gizmodo.com","URL":"https:\/\/gizmodo.com\/trump-threatens-104-tariffs-on-china-as-the-mad-king-plays-chicken-with-the-global-economy-2000585944"}
+{"Title":"What's in Trump's sweeping new tariff plan?","Published At":"2025-04-02T23:14:10Z","Source":"ABC News","URL":"https:\/\/abcnews.go.com\/Politics\/trumps-sweeping-new-tariff-plan\/story?id=120425851"}
+{"Title":"How were Donald Trump's tariffs calculated?","Published At":"2025-04-03T11:48:36Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/c93gq72n7y1o"}
+{"Title":"Canada Vows Economic Revenge on American Cars as Trump Spurs World\u2019s Dumbest Trade War","Published At":"2025-04-04T12:25:15Z","Source":"Gizmodo.com","URL":"https:\/\/gizmodo.com\/canada-vows-economic-revenge-on-american-cars-as-trump-spurs-worlds-dumbest-trade-war-2000585000"}
+{"Title":"Chinese social media users have turned the trade war into a meme war, complete with AI-generated art","Published At":"2025-04-10T01:02:41Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/chinese-social-media-users-turned-trade-tariff-war-meme-war-2025-4"}
+{"Title":"PSA pauses card grading submissions from outside the US","Published At":"2025-04-03T22:17:54Z","Source":"The Verge","URL":"https:\/\/www.theverge.com\/news\/643117\/psa-pausing-submissions-outside-us-tariffs"}
+{"Title":"Make America Sober Again: how Trump's tariffs are wreaking havoc on your favorite booze","Published At":"2025-03-20T08:14:01Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/bourbon-whiskey-tariffs-europe-canada-trump-trade-war-prices-cost-2025-3"}
+{"Title":"US expands export blacklist to keep computing tech out of China","Published At":"2025-03-26T13:37:26Z","Source":"The Verge","URL":"https:\/\/www.theverge.com\/news\/636277\/us-chinese-export-restrictions-blacklist-80-companies"}
+{"Title":"Trump said he might give China a 'little reduction in tariffs' to close a TikTok deal","Published At":"2025-03-27T04:47:09Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/trump-might-give-china-reduction-tariffs-to-close-tiktok-deal-2025-3"}
+{"Title":"The AI Race Has Gotten Crowded\u2014and China Is Closing In on the US","Published At":"2025-04-07T10:00:00Z","Source":"Wired","URL":"https:\/\/www.wired.com\/story\/stanford-study-global-artificial-intelligence-index\/"}
+{"Title":"Faisal Islam: Trump may have backtracked, but this is far from over","Published At":"2025-04-10T15:39:19Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/c20xxv3y9r2o"}
+{"Title":"How Trump's trade war could affect the cost of your breakfast","Published At":"2025-03-22T10:05:01Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/trumps-tariffs-breakfast-items-costs-2025-3"}
+{"Title":"The AI industry doesn\u2019t know if Trump just killed its GPU supply","Published At":"2025-04-04T18:55:33Z","Source":"The Verge","URL":"https:\/\/www.theverge.com\/tech\/643753\/gpu-tariffs-nvidia-tsmc-chips-openai"}
+{"Title":"Ray Dalio says tariffs have an important consequence: They can prepare the US for a great conflict or peer war","Published At":"2025-04-03T04:59:49Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/ray-dalio-tariffs-prepare-us-great-clash-peer-war-consequence-2025-4"}
+{"Title":"China retaliates again in Trump's trade war, prompting flight from US assets","Published At":"2025-04-11T03:35:00Z","Source":"Yahoo Entertainment","URL":"https:\/\/finance.yahoo.com\/news\/trumps-tariff-pause-brings-little-033500232.html"}
+{"Title":"Trump unveils his double-digit 'Liberation Day' reciprocal tariffs on China, Taiwan, and a slew of other key trading partners","Published At":"2025-04-02T21:07:42Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/trump-liberation-day-reciprocal-tariffs-speech-2025-4"}
+{"Title":"Investors facing tariff turmoil: 'It's fastest finger first'","Published At":"2025-04-10T18:59:49Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/c9djj7pgz57o"}
+{"Title":"US exports drove Vietnam's economic success - then came Trump's tariffs","Published At":"2025-04-09T06:24:28Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/crm332189djo"}
+{"Title":"\u2018Can This Be Right?\u2019: Reddit\u2019s Small Business Community Is Freaking Out Over Trump\u2019s Tariffs","Published At":"2025-04-09T12:35:45Z","Source":"Gizmodo.com","URL":"https:\/\/gizmodo.com\/can-this-be-right-reddits-small-business-community-is-freaking-out-over-trumps-tariffs-2000586757"}
+{"Title":"On TikTok, Chinese factories are trolling anxious American shoppers","Published At":"2025-04-15T18:38:55Z","Source":"The Verge","URL":"https:\/\/www.theverge.com\/tech\/649049\/tiktok-chinese-factories-tariffs-birkenstock-hermes"}
+{"Title":"China to limit number of American films imported from US amid tariff battle","Published At":"2025-04-10T16:18:00Z","Source":"ABC News","URL":"https:\/\/abcnews.go.com\/GMA\/Culture\/china-limit-number-american-films-imported-us-amid\/story?id=120680546"}
+{"Title":"China claps back with its own tariffs on US imports in retaliation against Trump","Published At":"2025-04-04T10:40:22Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/china-retaliates-own-tariffs-against-trump-2025-4"}
+{"Title":"Trump's trade war is eroding US billionaires' fortunes \u2014 while China's are getting even richer","Published At":"2025-04-14T13:06:43Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/billionaire-rich-list-wealth-trump-tariffs-china-stocks-trade-musk-2025-4"}
+{"Title":"Commerce Secretary Howard Lutnick says the EU deserves tariffs for not buying America's 'beautiful beef'","Published At":"2025-04-03T07:59:39Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/howard-lutnick-eu-deserves-tariffs-not-buying-america-beautiful-beef-2025-4"}
+{"Title":"UK prepared to retaliate against US tariffs, No 10 sources say","Published At":"2025-03-30T01:46:58Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/cg7299re15zo"}
+{"Title":"US Tariffs Could Make Smartphones Dumber","Published At":"2025-04-11T16:01:04Z","Source":"Wired","URL":"https:\/\/www.wired.com\/story\/us-tariffs-could-make-smartphones-dumber\/"}
+{"Title":"China Raises Tariffs on US Goods To 84% as Rift Escalates","Published At":"2025-04-09T11:31:00Z","Source":"Slashdot.org","URL":"https:\/\/slashdot.org\/story\/25\/04\/09\/1131225\/china-raises-tariffs-on-us-goods-to-84-as-rift-escalates"}
+{"Title":"Why Canada and Mexico are missing from Trump's tariff chart","Published At":"2025-04-03T02:05:22Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/why-canada-mexico-missing-from-donald-trump-reciprocal-tariff-chart-2025-4"}
+{"Title":"The bond vigilantes won. The spike in yields helped drive the president to pause his trade war.","Published At":"2025-04-10T13:52:17Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/trump-tariffs-pause-bond-market-yields-trade-war-china-imports-2025-4"}
+{"Title":"The Chinese e-commerce app the US can't get enough of right now","Published At":"2025-04-15T09:27:48Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/chinese-ecommerce-app-dhgate-us-cant-get-enough-2025-4"}
+{"Title":"Razer pauses direct laptop sales in the US as new tariffs loom","Published At":"2025-04-08T18:11:46Z","Source":"The Verge","URL":"https:\/\/www.theverge.com\/news\/645276\/razer-blade-gaming-laptops-sales-pause-us-tariffs"}
+{"Title":"Elon Musk meets defence officials in Pentagon visit","Published At":"2025-03-21T14:49:21Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/c0mw7wr0gp9o"}
+{"Title":"Mark Cuban says he'd have to pass on potential tariff costs to pharmacy customers","Published At":"2025-04-01T09:07:01Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/mark-cuban-cost-plus-drugs-pharmacy-pass-india-tariff-costs-2025-4"}
+{"Title":"Analysis: Why Beijing is not backing down on tariffs","Published At":"2025-04-11T12:01:42Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/cjew7y4j724o"}
+{"Title":"Trump announces new 25 percent tariff on all cars made outside the U.S.","Published At":"2025-03-26T21:36:30Z","Source":"NPR","URL":"https:\/\/www.npr.org\/2025\/03\/26\/nx-s1-5341767\/trump-trade-tariffs-imported-cars"}
+{"Title":"Trump says the TikTok deal is still 'very much' on the table \u2014 even after doubling down on his China trade war","Published At":"2025-04-10T04:57:55Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/trump-says-tiktok-deal-still-very-much-on-the-table-2025-4"}
+{"Title":"China and US are at each other's throats - and neither is backing down","Published At":"2025-04-04T15:42:45Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/c4grlzegewno"}
+{"Title":"Getting a job is hard. A trade war is only going to make it harder.","Published At":"2025-04-06T09:18:01Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/tariffs-make-job-market-harder-worse-workers-trump-trade-war-2025-4"}
+{"Title":"Stock market today: Dow surges 600 points, S&P 500 has best week since 2023 to cap wild week of tariff-fueled chaos","Published At":"2025-04-11T20:02:22Z","Source":"Yahoo Entertainment","URL":"https:\/\/finance.yahoo.com\/news\/live\/stock-market-today-dow-sp-500-post-best-week-since-2023-to-cap-wild-week-of-tariff-fueled-chaos-200222921.html"}
+{"Title":"Starmer vows to protect UK businesses from tariff 'storm'","Published At":"2025-04-06T03:05:11Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/c89g7g5lx2ko"}
+{"Title":"Nintendo delays Switch 2 preorders over tariff concerns","Published At":"2025-04-04T14:52:41Z","Source":"The Verge","URL":"https:\/\/www.theverge.com\/news\/643483\/nintendo-switch-2-preoders-delayed-tariffs"}
+{"Title":"The last time the US raised tariffs this much it made the Great Depression way worse","Published At":"2025-04-05T08:07:02Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/trumps-tariffs-highest-since-the-great-depression-2025-4"}
+{"Title":"Did Trump Use ChatGPT to Determine Disastrous New Tariffs?","Published At":"2025-04-03T20:40:00Z","Source":"Gizmodo.com","URL":"https:\/\/gizmodo.com\/did-trump-use-chatgpt-to-determine-disastrous-new-tariffs-2000584894"}
+{"Title":"Smart home device manufacturers are bracing for chaos \u2014 again","Published At":"2025-04-09T18:27:12Z","Source":"The Verge","URL":"https:\/\/www.theverge.com\/smart-home\/645927\/smart-home-device-manufacturers-are-bracing-for-chaos-again"}
+{"Title":"China Vows to \u2018Fight to the End\u2019 in Tit-for-Tat Trade War With Trump","Published At":"2025-04-08T02:45:00Z","Source":"Time","URL":"https:\/\/time.com\/7275610\/china-tariffs-trump-trade-war-countermeasures-retaliatory-tit-for-tat\/"}
+{"Title":"A deal for TikTok seemingly falls hostage to the US-China trade war","Published At":"2025-04-05T00:43:59Z","Source":"ABC News","URL":"https:\/\/abcnews.go.com\/Politics\/Tiktok-deal-us-china-trade-war\/story?id=120494441"}
+{"Title":"I import steel parts from China. Trump's tariffs won't stop me \u2014 it's still cheaper and easier.","Published At":"2025-03-22T10:31:02Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/business-buys-steel-parts-china-trump-tariffs-wont-change-easier-2025-3"}
+{"Title":"Trump pauses higher tariffs for 90 days but escalates China trade war","Published At":"2025-04-09T20:25:44Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/c5y66qe404po"}
+{"Title":"Will the iPhone Really Cost More Than $3K After Trump's Tariffs Start Tomorrow?","Published At":"2025-04-08T19:11:00Z","Source":"CNET","URL":"https:\/\/www.cnet.com\/personal-finance\/banking\/will-the-iphone-really-cost-more-than-3k-after-trumps-tariffs-start-tomorrow\/"}
+{"Title":"Trump Tariffs, Day Two","Published At":"2025-04-03T19:22:23Z","Source":"CNBC","URL":"https:\/\/www.cnbc.com\/2025\/04\/03\/trump-tariffs-live-updates-stock-market-trade-war.html"}
+{"Title":"Trump's tariffs are officially here","Published At":"2025-04-09T04:01:49Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/trump-tariffs-are-here-2025-4"}
+{"Title":"This is how the big differences in Trump's tariffs were calculated","Published At":"2025-04-03T15:34:55Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/the-math-used-to-calculate-trump-tariffs-2025-4"}
+{"Title":"Trump Announces Sweeping Tariffs in Bid to Reshape U.S. Economy and World Order","Published At":"2025-04-02T20:42:18Z","Source":"Time","URL":"https:\/\/time.com\/7274039\/trump-tariff-announcement\/"}
+{"Title":"Trump announced double-digit tariffs on dozens of countries. Here's what the US imports from some of the most affected ones.","Published At":"2025-04-03T19:59:57Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/trump-liberation-day-tariffs-what-us-imports-most-from-countries-2025-4"}
+{"Title":"'Economic nuclear war': Some billionaires criticize Trump's tariffs","Published At":"2025-04-07T19:14:00Z","Source":"ABC News","URL":"https:\/\/abcnews.go.com\/Business\/economic-nuclear-war-billionaires-criticize-trumps-tariffs\/story?id=120570107"}
+{"Title":"A day after raising tariffs on China to 54%, Trump says the US now has 'great power to negotiate' with China to force a TikTok sale","Published At":"2025-04-04T04:25:31Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/trump-tariffs-us-great-power-negotiate-with-china-tiktok-sale-2025-4"}
+{"Title":"Inside one of the wildest weeks for markets in recent memory","Published At":"2025-04-11T20:03:10Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/stock-market-today-sell-off-bond-yields-trump-trade-tariffs-2025-4"}
+{"Title":"Will Trump's Newest 50% Tariff on China Double the iPhone Price?","Published At":"2025-04-07T17:37:00Z","Source":"CNET","URL":"https:\/\/www.cnet.com\/personal-finance\/banking\/will-trumps-newest-50-tariff-on-china-double-the-iphone-price\/"}
+{"Title":"Bank of America: US-Made iPhones Would Face 90% Cost Surge","Published At":"2025-04-10T09:20:28Z","Source":"MacRumors","URL":"https:\/\/www.macrumors.com\/2025\/04\/10\/us-made-iphones-face-90-cost-surge\/"}
+{"Title":"Why Elon Musk is breaking with Donald Trump over tariffs","Published At":"2025-04-08T12:45:05Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/elon-musk-donald-trump-tariffs-opposition-tesla-china-byd-2025-4"}
+{"Title":"China Halts US LNG Imports as Trade War Reroutes Deliveries","Published At":"2025-03-18T00:00:29Z","Source":"Yahoo Entertainment","URL":"https:\/\/consent.yahoo.com\/v2\/collectConsent?sessionId=1_cc-session_2c8bec9b-6056-4139-929c-c2fce24dd29f"}
+{"Title":"UK sends military chief to China for first visit in 10 years","Published At":"2025-04-10T18:43:31Z","Source":"BBC News","URL":"https:\/\/www.bbc.com\/news\/articles\/cpq77q38vj1o"}
+{"Title":"Trump tariffs are all about Taiwan","Published At":"2025-04-07T18:39:19Z","Source":"Business Insider","URL":"https:\/\/www.businessinsider.com\/trump-tariffs-taiwan-china-invasion-explained-2025-4"}
